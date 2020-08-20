@@ -25,5 +25,14 @@
   "bugs": {
     "url": "https://github.com/ent3r/corax-bot-nodejs-rewrite/issues"
   },
-  "homepage": "https://github.com/ent3r/corax-bot-nodejs-rewrite#readme"
+  "homepage": "https://github.com/ent3r/corax-bot-nodejs-rewrite#readme",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "mongoose": "^5.10.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "^7.2.0",
+    "@types/mongoose": "^5.7.36",
+    "eslint": "^7.7.0"
+  }
 }
