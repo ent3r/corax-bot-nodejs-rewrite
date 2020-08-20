@@ -1,0 +1,29 @@
+{
+  "name": "corax-bot-nodejs-rewrite",
+  "private": true,
+  "version": "1.0.0",
+  "description": "A complete rewrite of the bot used in Team Corax's discord server, this time in discord.js!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint",
+    "dev": "cross-env NODE_ENV=development nodemon",
+    "start": "cross-env NODE_ENV=production node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ent3r/corax-bot-nodejs-rewrite.git"
+  },
+  "keywords": [
+    "discord.js",
+    "discord",
+    "ctf",
+    "corax"
+  ],
+  "author": "ent3r_ (https://ent3r.tk) <32072697+ent3r@users.noreply.github.com>",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/ent3r/corax-bot-nodejs-rewrite/issues"
+  },
+  "homepage": "https://github.com/ent3r/corax-bot-nodejs-rewrite#readme"
+}
