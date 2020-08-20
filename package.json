@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "A complete rewrite of the bot used in Team Corax's discord server, this time in discord.js!",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint",
