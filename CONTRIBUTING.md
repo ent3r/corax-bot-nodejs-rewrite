@@ -36,6 +36,7 @@ refactor: Description # if code is refactored
 docs: Description # if documentation is added
 lint: Description # if a lint issue is fixed
 other: Description # if there are any changes that doesn't fit within the other categories
+config: Description # if any config changes are added
 ```
 
 ### Issues
