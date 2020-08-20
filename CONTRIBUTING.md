@@ -27,7 +27,7 @@ The following are the guidelines we request you to follow in order to contribute
 
 ### Commit Messages
 
-The commit messages should follow the following pattern:
+The commit messages should follow the following pattern, along with being in the imperative present tense form (see [this][commit-message-guidelines]):
 
 ```bash
 feat: Description # if a new feature is added
@@ -85,3 +85,5 @@ You can contribute by:
 Make sure to document the contributions well in the pull request.
 
 > It is not compulsory to follow the guidelines mentioned above, but it is strongly recommended.
+
+[commit-message-guidelines]: https://github.com/trein/dev-best-practices/wiki/Git-Commit-Best-Practices#write-good-commit-messages
