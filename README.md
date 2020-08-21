@@ -141,7 +141,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 
 ## Roadmap
 
-See the [open issues](https://github.com/ent3r/corax-bot-nodejs-rewrite/issues) for a list of proposed features (and known issues).
+See the pinned [issues][issues-link] for a list of proposed features (and known issues).
 
 <!-- CONTRIBUTING -->
 
@@ -163,11 +163,12 @@ You are requested to follow the contribution guidelines specified in [CONTRIBUTI
 
 Distributed under the GNU GPLv3 License. See [`LICENSE`](./LICENSE) for more information.
 
+---
+
+This readme file, along with the contributing and code of conduct files were originally made from [this][original-template] template made by CSIVitu.
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 
 [original-template]: https://github.com/csivitu/Template
-
----
-
-This readme file, along with the contributing and code of conduct files were originally made from [this][original-template] template made by CSIVitu.
+[issues-link]: https://github.com/ent3r/corax-bot-notejs-rewrite/issues
