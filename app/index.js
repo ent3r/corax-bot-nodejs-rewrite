@@ -2,11 +2,9 @@ const { resolve } = require("path");
 const dotenv = require("dotenv");
 
 const { Client } = require("discord.js");
-const parser = require("discord-command-parser");
-
 const { loadCommands } = require("./util");
 
-const prefix = "cb;";
+const { onMessage } = require("./events/message");
 
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({
@@ -20,18 +18,13 @@ const client = new Client({
   disableMentions: "everyone",
 });
 
+client.prefix = "cb;";
+
 //? Load all the commands in use by the bot
 client.commands = loadCommands(resolve(__dirname, "commands"));
 
 client.on("message", (message) => {
-  const parsed = parser.parse(message, prefix);
-  if (parsed.error) {
-    console.log(parsed.error);
-    return;
-  }
-  const command = client.commands.get(parsed.command);
-  if (!command) return;
-  command.run(client, message, parsed.arguments);
+  onMessage(client, message);
 });
 
 client.once("ready", () => {
