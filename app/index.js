@@ -4,8 +4,10 @@ const dotenv = require("dotenv");
 const { Client } = require("discord.js");
 const parser = require("discord-command-parser");
 
+const { loadCommands } = require("./util");
 
 const prefix = "cb;";
+
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({
     // This is set to development.env instead of ../development.env because
@@ -18,16 +20,18 @@ const client = new Client({
   disableMentions: "everyone",
 });
 
+//? Load all the commands in use by the bot
+client.commands = loadCommands(resolve(__dirname, "commands"));
 
 client.on("message", (message) => {
   const parsed = parser.parse(message, prefix);
-  if (parsed.error) return;
-
-  switch (parsed.command) {
-    case "ping":
-      message.reply("Pong!");
-      break;
+  if (parsed.error) {
+    console.log(parsed.error);
+    return;
   }
+  const command = client.commands.get(parsed.command);
+  if (!command) return;
+  command.run(client, message, parsed.arguments);
 });
 
 client.once("ready", () => {
