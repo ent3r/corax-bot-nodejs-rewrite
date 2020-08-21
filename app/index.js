@@ -2,7 +2,10 @@ const { resolve } = require("path");
 const dotenv = require("dotenv");
 
 const { Client } = require("discord.js");
+const parser = require("discord-command-parser");
 
+
+const prefix = "cb;";
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({
     // This is set to development.env instead of ../development.env because
@@ -13,6 +16,18 @@ if (process.env.NODE_ENV !== "production") {
 
 const client = new Client({
   disableMentions: "everyone",
+});
+
+
+client.on("message", (message) => {
+  const parsed = parser.parse(message, prefix);
+  if (parsed.error) return;
+
+  switch (parsed.command) {
+    case "ping":
+      message.reply("Pong!");
+      break;
+  }
 });
 
 client.once("ready", () => {

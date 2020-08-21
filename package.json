@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/ent3r/corax-bot-nodejs-rewrite#readme",
   "dependencies": {
+    "discord-command-parser": "^1.4.3",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
     "mongoose": "^5.10.0"
