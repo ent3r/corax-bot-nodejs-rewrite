@@ -1,0 +1,51 @@
+# What version of the docker-compose.yml file we are using
+version: "3"
+
+# What services we want to run
+services:
+  # The bot instance
+  bot:
+    # Path to a Dockerfile that will be used
+    build: .
+
+    container_name: "coraxbot-node"
+
+    # Specify that it depends on the mongo service in order to work
+    #! Comment this out if you are running your own mongodb instance or dont want to
+    #! use this service
+    depends_on:
+      - mongo
+
+    # The .env file that will be used in the docker container
+    env_file:
+      - production.env
+
+  # The MongoDB service.
+  #! Comment all of this out if you don't want the MongoDB service to run
+  mongo:
+    # What image we want to use for the service
+    image: mongo:latest
+
+    # What we want the image to be called
+    container_name: "Mongodb-discord-bots"
+
+    # Mapping ports from the container to the host, using the format HOST:CONTAINER.
+    #? The reason it says 27018 instead of 27017 on the host side is because if you
+    #? are running MongoDB on your local machine, they would interfere. Using 27018
+    #? prevents this from happening since they are not using the same port any more
+    ports:
+      - 27018:27017
+
+    # What volumes we want this service to use
+    volumes:
+      - "mongodb_discord:/data/db"
+      - "mongodb_discord_config:/data/configdb"
+
+# The volumes that are used by all services.
+#? "external: true" means that the volumes were created externally using
+#? `docker volume new name_for_volume`, and that docker won't try to create them.
+volumes:
+  mongodb_discord:
+    external: true
+  mongodb_discord_config:
+    external: true
