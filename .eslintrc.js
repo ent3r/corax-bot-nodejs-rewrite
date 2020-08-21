@@ -9,7 +9,7 @@ module.exports = {
     ecmaVersion: 11,
   },
   rules: {
-      semi: "warn",
-      "no-unused-vars": "warn"
+    semi: "warn",
+    "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
   },
 };
