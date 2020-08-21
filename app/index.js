@@ -14,6 +14,9 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
+// Setup services and connections. In this case just mongodb
+require("./handlers/mongodb");
+
 const client = new Client({
   disableMentions: "everyone",
 });
