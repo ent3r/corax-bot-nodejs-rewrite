@@ -1,8 +1,10 @@
 const { Schema } = require("mongoose");
 
+const { configAndCacheDB } = require("../handlers/mongodb");
+
 const schema = new Schema({
-  server_id: { type: Number, default: null, required: true },
-  prefix: String,
+  server_id: { type: String, default: undefined, required: true },
+  prefix: { type: String, default: "cb;" },
   channel_settings: {
     ctf_category_id: { type: Number, default: null },
     archive_category_id: { type: Number, default: null },
@@ -12,4 +14,6 @@ const schema = new Schema({
   },
 });
 
-module.exports = schema;
+const model = configAndCacheDB.model("setting", schema);
+
+module.exports = model;

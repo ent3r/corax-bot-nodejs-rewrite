@@ -1,11 +1,8 @@
+//? Loading dependencies
 const { resolve } = require("path");
 const dotenv = require("dotenv");
 
-const { Client } = require("discord.js");
-const { loadCommands } = require("./util");
-
-const { onMessage } = require("./events/message");
-
+//? Using dotenv to get .env file variables while in developer mode
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({
     // This is set to development.env instead of ../development.env because
@@ -14,20 +11,28 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-// Setup services and connections. In this case just mongodb
+//? Loading discord.js related dependencies
+const { Client } = require("discord.js");
+const { loadCommands } = require("./util");
+const { message, guildCreate } = require("./events");
+
+//? Setup services and connections. In this case just mongodb
 require("./handlers/mongodb");
 
+//? Create the client, and disable the option for it to mention @everyone
 const client = new Client({
   disableMentions: "everyone",
 });
 
-client.prefix = "cb;";
-
 //? Load all the commands in use by the bot
 client.commands = loadCommands(resolve(__dirname, "commands"));
 
-client.on("message", (message) => {
-  onMessage(client, message);
+client.on("guildCreate", (guild) => {
+  guildCreate(client, guild);
+});
+
+client.on("message", (msg) => {
+  message(client, msg);
 });
 
 client.once("ready", () => {

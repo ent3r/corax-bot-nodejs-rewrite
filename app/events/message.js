@@ -1,6 +1,9 @@
 // eslint-disable-next-line
 const { Client, Message } = require("discord.js");
 
+const configModel = require("../models/serversettings");
+const { configAndCacheDB } = require("../handlers/mongodb");
+
 const parser = require("discord-command-parser");
 
 module.exports = {
@@ -11,8 +14,23 @@ module.exports = {
    * @param {Message} message the incoming message
    * @returns none
    */
-  onMessage: (client, message) => {
-    const parsed = parser.parse(message, client.prefix);
+  onMessage: async (client, message) => {
+    let serverConfig = await configModel.findOne({
+      server_id: message.guild.id,
+    });
+
+    if (!serverConfig) {
+      serverConfig = new configModel({
+        server_id: message.guild.id,
+      });
+      serverConfig.save((err) => {
+        console.log(err);
+      });
+    }
+
+    const prefix = serverConfig.prefix || "cb;";
+
+    const parsed = parser.parse(message, prefix);
     if (parsed.error) {
       console.log(parsed.error);
       return;
