@@ -27,16 +27,20 @@ const client = new Client({
 //? Load all the commands in use by the bot
 client.commands = loadCommands(resolve(__dirname, "commands"));
 
+//? Makes sure a document with server settings gets created when the bot joins a new server
 client.on("guildCreate", (guild) => {
   guildCreate(client, guild);
 });
 
+//? Handle the message event in its own file
 client.on("message", (msg) => {
   message(client, msg);
 });
 
+//? When the bot is ready and logged in, console.log it
 client.once("ready", () => {
   console.log(`Bot logged in as ${client.user.tag} (${client.user.id})`);
 });
 
+//? Login the bot using process.env
 client.login(process.env.DISCORD_TOKEN);

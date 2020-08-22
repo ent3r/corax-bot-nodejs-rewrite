@@ -32,21 +32,31 @@ const addCommand = (collection, command) => {
 const loadCommands = (folder = "./commands/") => {
   const Commands = new Collection();
 
+  //? Goes through a folder and finds all .js and .ts files
   const files = readdirSync(folder).filter(
     (file) => file.endsWith(".js") || file.endsWith(".ts")
   );
 
+  //? For every file
   for (let file of files) {
+    //? Require it, making sure to add in the folder it is in
     let commands = require(resolve(folder, file));
 
+    //? If there are multiple commands in one file
     if (commands.hasMultiple) {
+      //? Go through each command and add it
       commands.commands.forEach((command) => {
         addCommand(Commands, command);
       });
+
+      //? And if not
     } else {
+      //? Just add it
       addCommand(Commands, commands);
     }
   }
+
+  //? Then return the new collection of commands
   return Commands;
 };
 
