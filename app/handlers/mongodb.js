@@ -1,9 +1,11 @@
 const mongoose = require("mongoose");
 
+mongoose.set("useNewUrlParser", true);
+mongoose.set("useUnifiedTopology", true);
+
 // #region configAndCacheDB
 const configAndCacheDB = mongoose.createConnection(
-  `${process.env.MONGODB_ROOT_URI}/discord-configCache`,
-  { useNewUrlParser: true, useUnifiedTopology: true }
+  `${process.env.MONGODB_ROOT_URI}/discord-configCache`
 );
 
 configAndCacheDB.on("error", (err) => {
@@ -17,8 +19,7 @@ configAndCacheDB.once("open", () => {
 
 // #region ctfDB
 const ctfDB = mongoose.createConnection(
-  `${process.env.MONGODB_ROOT_URI}/discord-ctf`,
-  { useNewUrlParser: true, useUnifiedTopology: true }
+  `${process.env.MONGODB_ROOT_URI}/discord-ctf`
 );
 
 ctfDB.on("error", (err) => {
