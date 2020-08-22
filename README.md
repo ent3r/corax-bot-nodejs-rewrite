@@ -31,9 +31,6 @@
     <a href="https://github.com/ent3r/corax-bot-nodejs-rewrite/pulls">
       <img src="https://img.shields.io/github/issues-pr-raw/ent3r/corax-bot-nodejs-rewrite.svg">
     </a>
-    <a href="./package.json">
-      <img src="https://img.shields.io/librariesio/github/ent3r/corax-bot-nodejs-rewrite">
-    </a>
   </div>
 </p>
 
