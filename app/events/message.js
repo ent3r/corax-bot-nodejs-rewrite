@@ -2,7 +2,6 @@
 const { Client, Message } = require("discord.js");
 
 const configModel = require("../models/serversettings");
-const { configAndCacheDB } = require("../handlers/mongodb");
 
 const parser = require("discord-command-parser");
 
