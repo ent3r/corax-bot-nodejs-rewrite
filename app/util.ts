@@ -1,4 +1,4 @@
-import { Collection } from "discord.js";
+import { Collection, Client } from "discord.js";
 
 import { resolve } from "path";
 
@@ -53,4 +53,12 @@ const loadCommands = async (folder = "./commands/"): Promise<Collection<string, 
   return CommandCollection;
 };
 
-export { loadCommands };
+const setCooldowns = (client: Client): void => {
+  const cooldowns = new Collection<string, Collection<string, number>>();
+  client.commands.forEach(command => {
+    cooldowns.set(command.config.name, new Collection());
+  });
+  client.cooldowns = cooldowns;
+};
+
+export { loadCommands, setCooldowns };

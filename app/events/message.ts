@@ -5,6 +5,9 @@ import configModel from "../models/serversettings";
 
 //? We need the parser in order to parse incoming messages
 import * as parser from "discord-command-parser";
+import { DMChannel } from "discord.js";
+
+import * as ms from "ms";
 
 /**
  *Handles an incoming message
@@ -45,11 +48,49 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
     return;
   }
 
-  //? If the comand doesn't exist, return
-  if (!client.commands.has(parsed.command)) return;
-
   //? Get the command
-  const command = client.commands.get(parsed.command);
+  const command =
+    client.commands.get(parsed.command) ||
+    client.commands.find(
+      (cmd) => cmd.config.aliases && cmd.config.aliases.includes(parsed.command)
+    );
+
+  if (!command) return;
+
+  if (command.config.guildOnly && message.channel instanceof DMChannel) {
+    message.channel.send("This command does not work in DMs");
+    return;
+  }
+
+  if (!parsed.arguments && command.config.help.arguments) {
+    message.channel.send(
+      `Missing required arguments. Usage: ${command.config.help.usage}`
+    );
+    return;
+  }
+
+  if (command.config.cooldown) {
+    const now = Date.now();
+    const timestamps = client.cooldowns.get(command.config.name);
+    const cooldownAmount = command.config.cooldown * 1000;
+
+    if (timestamps.has(message.author.id)) {
+      const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+      if (now < expirationTime) {
+        const timeLeft = expirationTime - now;
+        message.channel.send(
+          `Command is under cooldown. Please wait another ${ms(timeLeft, {
+            long: true,
+          })} before running this command again`
+        );
+        return;
+      }
+    }
+
+    client.cooldowns.get(command.config.name).set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+  }
 
   //? Use a try catch block in case something happens
   try {

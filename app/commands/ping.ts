@@ -33,6 +33,7 @@ const command = new Command(
   {
     name: "ping",
     aliases: [],
+    cooldown: 10
   },
   run
 );

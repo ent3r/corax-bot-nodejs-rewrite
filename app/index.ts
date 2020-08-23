@@ -13,7 +13,7 @@ if (process.env.NODE_ENV !== "production") {
 
 //? Loading discord.js related dependencies
 import { Client } from "discord.js";
-import { loadCommands } from "./util";
+import { loadCommands, setCooldowns } from "./util";
 import { message, guildCreate } from "./events/index";
 
 //? Setup services and connections. In this case just mongodb
@@ -24,9 +24,12 @@ const client = new Client({
   disableMentions: "everyone",
 });
 
-//? Load all the commands in use by the bot
+//? Load all the commands in use by the bot, and add them to a collection managing delays and cooldowns
 loadCommands(resolve(__dirname, "commands"))
-  .then((commands) => (client.commands = commands))
+  .then((commands) => {
+    client.commands = commands;
+    setCooldowns(client);
+  })
   .catch((err) => console.error(err));
 
 //? Makes sure a document with server settings gets created when the bot joins a new server
