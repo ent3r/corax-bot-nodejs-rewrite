@@ -36,8 +36,6 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
   //? Then get the prefix, using cb; as a default if it couldn't be found
   const prefix = serverConfig.prefix || "cb;";
 
-  console.log(prefix);
-
   //? Parse the message
   const parsed: any = parser.parse(message, prefix);
 
