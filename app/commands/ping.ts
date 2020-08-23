@@ -2,6 +2,7 @@ import Command from "../typings/Command";
 import { Client, Message, MessageEmbed } from "discord.js";
 
 //? Create the function that will be used for the command
+const run = async (client: Client, message: Message, _args: Array<string>): Promise<void> => {
   //? Create a new embed. This is the embed that will be edited, and it is therefore saved
   const embed = new MessageEmbed({
     title: "Pinging...",

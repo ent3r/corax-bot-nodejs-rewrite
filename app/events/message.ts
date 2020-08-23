@@ -11,7 +11,7 @@ import * as parser from "discord-command-parser";
  *
  * @param {Client} client the discord.js client
  * @param {Message} message the incoming message
- * @returns {Promise<void>} doesn't return anything
+ * @returns {Promise<void>}
  */
 const onMessage = async (client: Client, message: Message): Promise<void> => {
   //? Try to find the server config in the database

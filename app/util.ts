@@ -11,9 +11,9 @@ import { ICommand } from "./typings/Command";
  *
  * @param {Collection} collection the collection the command should be added to
  * @param {Object} command the command itself
- * @returns null
+ * @returns {void}
  */
-const addCommand = (collection: Collection<string, any>, command: ICommand) => {
+const addCommand = (collection: Collection<string, any>, command: ICommand): void => {
   if (command.config.disabled) {
     return;
   }
