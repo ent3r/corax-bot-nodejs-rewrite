@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import * as mongoose from "mongoose";
 
 //? Set two options globally instead of per connection, to minimize duplicate code
 mongoose.set("useNewUrlParser", true);
@@ -38,11 +38,4 @@ ctfDB.once("open", () => {
 });
 // #endregion
 
-/**
- * Connects to MongoDB
- *
- */
-module.exports = {
-  configAndCacheDB: configAndCacheDB,
-  ctfDB: ctfDB,
-};
+export { configAndCacheDB, ctfDB };

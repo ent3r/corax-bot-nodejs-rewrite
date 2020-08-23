@@ -1,6 +1,6 @@
 //? Loading dependencies
-const { resolve } = require("path");
-const dotenv = require("dotenv");
+import { resolve } from "path";
+import * as dotenv from "dotenv";
 
 //? Using dotenv to get .env file variables while in developer mode
 if (process.env.NODE_ENV !== "production") {
@@ -12,9 +12,9 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 //? Loading discord.js related dependencies
-const { Client } = require("discord.js");
-const { loadCommands } = require("./util");
-const { message, guildCreate } = require("./events");
+import { Client } from "discord.js";
+import { loadCommands } from "./util";
+import { message, guildCreate } from "./events/index";
 
 //? Setup services and connections. In this case just mongodb
 require("./handlers/mongodb");
@@ -25,7 +25,9 @@ const client = new Client({
 });
 
 //? Load all the commands in use by the bot
-client.commands = loadCommands(resolve(__dirname, "commands"));
+loadCommands(resolve(__dirname, "commands"))
+  .then((commands) => (client.commands = commands))
+  .catch((err) => console.error(err));
 
 //? Makes sure a document with server settings gets created when the bot joins a new server
 client.on("guildCreate", (guild) => {

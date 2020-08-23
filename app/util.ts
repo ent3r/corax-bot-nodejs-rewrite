@@ -1,8 +1,10 @@
-const { Collection } = require("discord.js");
+import { Collection } from "discord.js";
 
-const { resolve } = require("path");
+import { resolve } from "path";
 
-const { readdirSync } = require("fs");
+import { readdirSync } from "fs";
+
+import { ICommand } from "./typings/Command";
 
 /**
  *Goes through checks to make sure a command is valid, and adds it to a collection if it is
@@ -11,26 +13,19 @@ const { readdirSync } = require("fs");
  * @param {Object} command the command itself
  * @returns null
  */
-const addCommand = (collection, command) => {
-  if (command.disabled) {
+const addCommand = (collection: Collection<string, any>, command: ICommand) => {
+  if (command.config.disabled) {
     return;
   }
-  if (!command.name) {
+  if (!command.config.name) {
     throw new Error("Missing command name");
   }
-  if (!command.run) {
-    throw new Error("Missing run function for command");
-  }
-  collection.set(command.name, command);
+  collection.set(command.config.name, command);
 };
 
-/**
- *Loads all the commands in the ./commands/ folder
- *
- * @param {String} [folder="./commands/"] What folder to use. Defaults to "./commands/"
- */
-const loadCommands = (folder = "./commands/") => {
-  const Commands = new Collection();
+
+const loadCommands = async (folder = "./commands/"): Promise<Collection<string, ICommand>> => {
+  const Commands = new Collection<string, ICommand>();
 
   //? Goes through a folder and finds all .js and .ts files
   const files = readdirSync(folder).filter(
@@ -38,9 +33,9 @@ const loadCommands = (folder = "./commands/") => {
   );
 
   //? For every file
-  for (let file of files) {
+  for (const file of files) {
     //? Require it, making sure to add in the folder it is in
-    let commands = require(resolve(folder, file));
+    const commands = await require(resolve(folder, file));
 
     //? If there are multiple commands in one file
     if (commands.hasMultiple) {
@@ -60,6 +55,4 @@ const loadCommands = (folder = "./commands/") => {
   return Commands;
 };
 
-module.exports = {
-  loadCommands: loadCommands,
-};
+export { loadCommands };
