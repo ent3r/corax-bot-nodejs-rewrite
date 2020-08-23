@@ -9,7 +9,13 @@
     "lint": "eslint",
     "dev": "cross-env NODE_ENV=development nodemon",
     "start": "cross-env NODE_ENV=production node build/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "docker:build-bot": "docker-compose build bot",
+    "docker:start-bot": "docker-compose start bot",
+    "docker:stop-bot": "docker-compose stop bot",
+    "docker:build": "docker-compose build",
+    "docker:start": "docker-compose up -d",
+    "docker:stop": "docker-compose down"
   },
   "repository": {
     "type": "git",
