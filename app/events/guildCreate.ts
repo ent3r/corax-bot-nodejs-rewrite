@@ -1,8 +1,9 @@
 //? Require the model used for server settings
-const configModel = require("../models/serversettings");
+import configModel from "../models/serversettings";
 
-//? Export a function
-module.exports = (client, guild) => {
+import { Client, Guild } from "discord.js";
+
+const guildCreate = (client: Client, guild: Guild): void => {
   //? Make a new server config
   const serverConfig = new configModel({
     server_id: guild.id,
@@ -13,3 +14,6 @@ module.exports = (client, guild) => {
     console.log(err);
   });
 };
+
+//? Export a function
+export default guildCreate;

@@ -1,7 +1,23 @@
-const { Schema } = require("mongoose");
+import { Schema, Document } from "mongoose";
 
 //? Require the database everything will be stored to
-const { configAndCacheDB } = require("../handlers/mongodb");
+import { configAndCacheDB } from "../handlers/mongodb";
+
+//? Making our own interface for the settings
+interface IChannelSettings {
+  ctf_category_id: number;
+  archive_category_id: number;
+  working_category_id: number;
+  done_category_id: number;
+  delete_category: number;
+}
+
+//? We need to make our own Schema that extends Document or else TS is mad that properties dont exist
+interface ISchema extends Document {
+  server_id: string;
+  prefix: string;
+  channel_settings: IChannelSettings;
+}
 
 //? Create the schema that will be used
 const schema = new Schema({
@@ -17,6 +33,6 @@ const schema = new Schema({
 });
 
 //? Create the model. This can be done here because it doesn't dynamically create collections
-const model = configAndCacheDB.model("setting", schema);
+const model = configAndCacheDB.model<ISchema>("setting", schema);
 
-module.exports = model;
+export default model;
