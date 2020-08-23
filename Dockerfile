@@ -23,5 +23,7 @@ RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
 WORKDIR /opt/app
 ADD . .
 
+RUN yarn run build
+
 # Start the bot in production mode
 CMD [ "yarn", "start" ]
