@@ -8,6 +8,7 @@ import * as parser from "discord-command-parser";
 import { DMChannel } from "discord.js";
 
 import * as ms from "ms";
+import logger from "../handlers/logging";
 
 /**
  *Handles an incoming message
@@ -31,7 +32,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
 
     //? And add it to the database
     serverConfig.save((err) => {
-      console.log(err);
+      logger.warn(err);
     });
   }
 
@@ -44,7 +45,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
   //? If there was an error after parsing it
   if (parsed.error) {
     //? Log it and then return
-    console.log(parsed.error);
+    logger.debug(parsed.error);
     return;
   }
 
@@ -102,7 +103,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
     //? Run the command
     await command.run(client, message, parsed.arguments);
   } catch {
-    (err: any) => console.warn(err);
+    (err: any) => logger.warn(err);
   }
 };
 
