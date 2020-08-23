@@ -1,6 +1,12 @@
 import { Client, Message } from "discord.js";
 import { ICommand } from "./Command";
 
+declare module "discord.js" {
+  export interface Client {
+    commands: Collection<string, ICommand>;
+  }
+}
+
 export interface CommandOptions {
   name: string;
   aliases?: string[] | undefined[];
@@ -10,12 +16,6 @@ export interface CommandOptions {
     category?: string;
     usage?: string;
   };
-}
-
-declare module "discord.js" {
-  export interface Client {
-    commands: Collection<string, ICommand>;
-  }
 }
 
 export type CommandFunction = (
