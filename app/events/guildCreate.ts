@@ -1,6 +1,7 @@
-//? Require the model used for server settings
+//? Import the model used for server settings
 import configModel from "../models/serversettings";
 
+//? Import Client and Guild to be used for typing
 import { Client, Guild } from "discord.js";
 
 const guildCreate = (client: Client, guild: Guild): void => {
@@ -15,5 +16,5 @@ const guildCreate = (client: Client, guild: Guild): void => {
   });
 };
 
-//? Export a function
+//? Export the function
 export default guildCreate;

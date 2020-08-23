@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import { Client, Message } from "discord.js";
 
 //? Make sure we have the model used to store server settings
@@ -12,7 +11,7 @@ import * as parser from "discord-command-parser";
  *
  * @param {Client} client the discord.js client
  * @param {Message} message the incoming message
- * @returns none
+ * @returns {Promise<void>} doesn't return anything
  */
 const onMessage = async (client: Client, message: Message): Promise<void> => {
   //? Try to find the server config in the database
