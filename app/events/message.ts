@@ -48,27 +48,32 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
     return;
   }
 
-  //? Get the command
+  //? Get the command. If the command couldnt' be found, check to see if the command has any aliases and then use that.
   const command =
     client.commands.get(parsed.command) ||
     client.commands.find(
       (cmd) => cmd.config.aliases && cmd.config.aliases.includes(parsed.command)
     );
 
+  //? If the command wasn't found, it most likely doesn't exist. Return
   if (!command) return;
 
+  //? Checks if a command is marked as guildOnly and the command is sent in a DM. If it is, return
   if (command.config.guildOnly && message.channel instanceof DMChannel) {
     message.channel.send("This command does not work in DMs");
     return;
   }
 
-  if (!parsed.arguments && command.config.help.arguments) {
+  //? Checks if there are no passed arguments, and if the command provides a usage
+  if (parsed.arguments === [] && command.config.help.arguments) {
     message.channel.send(
       `Missing required arguments. Usage: ${command.config.help.usage}`
     );
     return;
   }
 
+  //? A big feature that checks if the command has a cooldown set. If it has, it checks if the
+  //? user that ran the command is currently in the cooldown
   if (command.config.cooldown) {
     const now = Date.now();
     const timestamps = client.cooldowns.get(command.config.name);
