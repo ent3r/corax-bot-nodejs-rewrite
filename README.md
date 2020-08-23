@@ -7,7 +7,7 @@
     <img src="https://corax.team/static/img/corax_dark.gif" alt="Logo" width="200px">
   </a>
 
-  <h3 align="center">Team Corax discord bot rewrite</h3>
+  <h1 align="center">Team Corax discord bot rewrite</h1>
 
   <p align="center">
     A complete rewrite of the bot used in Team Corax's discord server, this time in discord.js!
