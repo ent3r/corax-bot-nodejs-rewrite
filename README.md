@@ -4,7 +4,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/ent3r/corax-bot-nodejs-rewrite">
-    <img src="https://corax.team/static/img/corax_gif.gif" alt="Logo" width="200px">
+    <img src="https://corax.team/static/img/corax_dark.gif" alt="Logo" width="200px">
   </a>
 
   <h3 align="center">Team Corax discord bot rewrite</h3>
