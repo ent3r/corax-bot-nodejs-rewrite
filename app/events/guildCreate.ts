@@ -3,8 +3,10 @@ import configModel from "../models/serversettings";
 
 //? Import Client and Guild to be used for typing
 import { Client, Guild } from "discord.js";
+import logger from "../handlers/logging";
 
 const guildCreate = (client: Client, guild: Guild): void => {
+  logger.info(`Joined new server: ${guild.name} (${guild.id})`);
   //? Make a new server config
   const serverConfig = new configModel({
     server_id: guild.id,
@@ -12,8 +14,9 @@ const guildCreate = (client: Client, guild: Guild): void => {
 
   //? And save it to the database
   serverConfig.save((err) => {
-    console.log(err);
+    logger.warn(err);
   });
+  logger.debug("Saved config to database");
 };
 
 //? Export the function
