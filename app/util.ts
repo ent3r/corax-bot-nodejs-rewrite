@@ -5,6 +5,7 @@ import { resolve } from "path";
 import { readdirSync } from "fs";
 
 import { ICommand } from "./typings/Command";
+import Commands from "./typings/Commands";
 
 /**
  *Goes through checks to make sure a command is valid, and adds it to a collection if it is
@@ -25,7 +26,7 @@ const addCommand = (collection: Collection<string, any>, command: ICommand): voi
 
 
 const loadCommands = async (folder = "./commands/"): Promise<Collection<string, ICommand>> => {
-  const Commands = new Collection<string, ICommand>();
+  const CommandCollection = new Collection<string, ICommand>();
 
   //? Goes through a folder and finds all .js and .ts files
   const files = readdirSync(folder).filter(
@@ -37,22 +38,19 @@ const loadCommands = async (folder = "./commands/"): Promise<Collection<string, 
     //? Require it, making sure to add in the folder it is in
     const commands = await require(resolve(folder, file));
 
-    //? If there are multiple commands in one file
-    if (commands.hasMultiple) {
-      //? Go through each command and add it
-      commands.commands.forEach((command) => {
-        addCommand(Commands, command);
+    //? Check if a command file contains multiple commands, indicated by class Commands
+    //? and add each of them to the collection if it is. Otherwise just add a single one
+    if (commands instanceof Commands) {
+      commands.commands.forEach(command => {
+        addCommand(CommandCollection, command);
       });
-
-      //? And if not
     } else {
-      //? Just add it
-      addCommand(Commands, commands);
+      addCommand(CommandCollection, commands);
     }
   }
 
   //? Then return the new collection of commands
-  return Commands;
+  return CommandCollection;
 };
 
 export { loadCommands };
