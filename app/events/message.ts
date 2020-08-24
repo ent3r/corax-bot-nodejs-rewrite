@@ -32,9 +32,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
     });
 
     //? And add it to the database
-    serverConfig.save((err) => {
-      logger.warn(err);
-    });
+    serverConfig.save().catch((error) => console.warn(error));
   }
 
   //? Then get the prefix, using cb; as a default if it couldn't be found
