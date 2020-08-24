@@ -30,6 +30,12 @@ const addCommand = (
   collection.set(command.config.name, command);
 };
 
+/**
+ *Loads commands from `folder` and returns a new collection
+ *
+ * @param {string} [folder="./commands/"] The folder to be searched
+ * @returns {Promise<Collection<string, ICommand>>} A promise for a collection of all the commands found
+ */
 const loadCommands = async (
   folder = "./commands/"
 ): Promise<Collection<string, ICommand>> => {
@@ -68,6 +74,11 @@ const loadCommands = async (
   return CommandCollection;
 };
 
+/**
+ *Sets all the cooldowns for a command
+ *
+ * @param {Client} client The client object
+ */
 const setCooldowns = (client: Client): void => {
   const cooldowns = new Collection<string, Collection<string, number>>();
   client.commands.forEach((command) => {
