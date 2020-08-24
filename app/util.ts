@@ -101,13 +101,13 @@ const getCommand = (
   commandCollection: Collection<string, Command>,
   // eslint-disable-next-line
   commandOrAlias: any
-): Command => (
+): Command =>
   commandCollection.get(commandOrAlias) ||
   commandCollection.find(
-    (cmd) => cmd.config.aliases &&
+    (cmd) =>
+      cmd.config.aliases &&
       cmd.config.aliases.length !== 0 &&
       cmd.config.aliases.includes(commandOrAlias)
-  )
-);
+  );
 
 export { loadCommands, setCooldowns, getCommand };
