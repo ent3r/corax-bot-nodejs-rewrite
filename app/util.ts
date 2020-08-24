@@ -4,7 +4,7 @@ import { resolve } from "path";
 
 import { readdirSync } from "fs";
 
-import { ICommand } from "./typings/Command";
+import Command, { ICommand } from "./typings/Command";
 import CommandGroup from "./typings/CommandGroup";
 
 import logger from "./handlers/logging";
@@ -77,4 +77,24 @@ const setCooldowns = (client: Client): void => {
   client.cooldowns = cooldowns;
 };
 
-export { loadCommands, setCooldowns };
+/**
+ *Gets a command from a Collection
+ *
+ * @param {Collection<string, Command>} commandCollection The collection with the commands to be searched for
+ * @param {any} commandOrAlias A command name or alias for a command
+ * @returns {Command} A command object
+ */
+const getCommand = (
+  commandCollection: Collection<string, Command>,
+  // eslint-disable-next-line
+  commandOrAlias: any
+): Command => (
+  commandCollection.get(commandOrAlias) ||
+  commandCollection.find(
+    (cmd) => cmd.config.aliases &&
+      cmd.config.aliases.length !== 0 &&
+      cmd.config.aliases.includes(commandOrAlias)
+  )
+);
+
+export { loadCommands, setCooldowns, getCommand };

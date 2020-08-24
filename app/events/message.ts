@@ -9,6 +9,7 @@ import { DMChannel } from "discord.js";
 
 import * as ms from "ms";
 import logger from "../handlers/logging";
+import { getCommand } from "../util";
 
 /**
  *Handles an incoming message
@@ -50,11 +51,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
   }
 
   //? Get the command. If the command couldnt' be found, check to see if the command has any aliases and then use that.
-  const command =
-    client.commands.get(parsed.command) ||
-    client.commands.find(
-      (cmd) => cmd.config.aliases && cmd.config.aliases.includes(parsed.command)
-    );
+  const command = getCommand(client.commands, parsed.command);
 
   //? If the command wasn't found, it most likely doesn't exist. Return
   if (!command) return;
