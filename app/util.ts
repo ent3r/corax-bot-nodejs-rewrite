@@ -5,7 +5,7 @@ import { resolve } from "path";
 import { readdirSync } from "fs";
 
 import { ICommand } from "./typings/Command";
-import Commands from "./typings/Commands";
+import CommandGroup from "./typings/CommandGroup";
 
 import logger from "./handlers/logging";
 
@@ -49,7 +49,7 @@ const loadCommands = async (
     logger.debug(`Required file ${file}`);
     //? Check if a command file contains multiple commands, indicated by class Commands
     //? and add each of them to the collection if it is. Otherwise just add a single one
-    if (commands instanceof Commands) {
+    if (commands instanceof CommandGroup) {
       commands.commands.forEach((command) => {
         addCommand(CommandCollection, command);
       });
