@@ -60,8 +60,10 @@ const loadCommands = async (
       commands.commands.forEach((command) => {
         addCommand(CommandCollection, command);
       });
-    } else {
+    } else if (commands instanceof Command) {
       addCommand(CommandCollection, commands);
+    } else {
+      continue;
     }
   }
 
