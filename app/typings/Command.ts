@@ -1,8 +1,8 @@
 import { CommandOptions, CommandFunction } from ".";
 
 export interface ICommand {
-    config: CommandOptions,
-    run: CommandFunction
+  config: CommandOptions;
+  run: CommandFunction;
 }
 
 export default class Command {
