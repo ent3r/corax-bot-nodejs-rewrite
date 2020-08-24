@@ -28,7 +28,7 @@ export interface CommandOptions {
 }
 
 export type CommandFunction = (
-  client?: Client,
-  message?: Message,
-  args?: string[]
+  client: Client,
+  message: Message,
+  args: string[]
 ) => any | Promise<any>;
