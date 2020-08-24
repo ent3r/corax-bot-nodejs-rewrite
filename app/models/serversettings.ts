@@ -24,7 +24,7 @@ const schema = new Schema({
   server_id: { type: String, default: "", required: true },
   prefix: { type: String, default: "cb;" },
   channel_settings: {
-    ctf_ategory_id: { type: String, default: "" },
+    ctf_category_id: { type: String, default: "" },
     archive_category_id: { type: String, default: "" },
     working_category_id: { type: String, default: "" },
     done_category_id: { type: String, default: "" },
