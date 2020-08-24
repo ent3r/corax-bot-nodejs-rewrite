@@ -24,7 +24,8 @@ const addCommand = (
     return;
   }
   if (!command.config.name) {
-    throw new Error("Missing command name");
+    logger.warn("Command missing name");
+    return;
   }
   collection.set(command.config.name, command);
 };
