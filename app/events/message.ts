@@ -61,9 +61,9 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
   }
 
   //? Checks if there are no passed arguments, and if the command provides a usage
-  if (parsed.arguments === [] && command.config.help.arguments) {
+  if (parsed.arguments.length === 0 && command.config.help.arguments) {
     message.channel.send(
-      `Missing required arguments. Usage: ${command.config.help.usage}`
+      `Missing required arguments. Usage: \`${prefix}${parsed.command} ${command.config.help.usage}\``
     );
     return;
   }
