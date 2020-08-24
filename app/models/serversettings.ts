@@ -5,11 +5,11 @@ import { configAndCacheDB } from "../handlers/mongodb";
 
 //? Making our own interface for the settings
 interface IChannelSettings {
-  ctf_category_id: number;
-  archive_category_id: number;
-  working_category_id: number;
-  done_category_id: number;
-  delete_category: number;
+  ctf_category_id: string;
+  archive_category_id: string;
+  working_category_id: string;
+  done_category_id: string;
+  delete_category_id: string;
 }
 
 //? We need to make our own Schema that extends Document or else TS is mad that properties dont exist
@@ -21,14 +21,14 @@ interface ISchema extends Document {
 
 //? Create the schema that will be used
 const schema = new Schema({
-  server_id: { type: String, default: undefined, required: true },
+  server_id: { type: String, default: "", required: true },
   prefix: { type: String, default: "cb;" },
   channel_settings: {
-    ctf_category_id: { type: Number, default: null },
-    archive_category_id: { type: Number, default: null },
-    working_category_id: { type: Number, default: null },
-    done_category_id: { type: Number, default: null },
-    delete_category: { type: Number, default: null },
+    ctf_ategory_id: { type: String, default: "" },
+    archive_category_id: { type: String, default: "" },
+    working_category_id: { type: String, default: "" },
+    done_category_id: { type: String, default: "" },
+    delete_category_id: { type: String, default: "" },
   },
 });
 
