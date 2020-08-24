@@ -38,7 +38,7 @@ loadCommands(resolve(__dirname, "commands"))
     client.commands = commands;
     setCooldowns(client);
   })
-  .catch((err) => logger.error(err));
+  .catch((err) => console.error(err));
 
 //? Makes sure a document with server settings gets created when the bot joins a new server
 client.on("guildCreate", (guild) => {

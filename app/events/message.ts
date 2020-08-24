@@ -103,7 +103,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
     //? Run the command
     await command.run(client, message, parsed.arguments);
   } catch {
-    (err: any) => logger.warn(err);
+    (err) => console.warn(err);
   }
 };
 
