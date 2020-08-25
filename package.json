@@ -12,10 +12,10 @@
     "build": "tsc",
     "docker:build-bot": "docker-compose build bot",
     "docker:start-bot": "docker-compose start bot",
-    "docker:stop-bot": "docker-compose stop bot",
+    "docker:stop-bot": "docker-compose stop bot -t 20",
     "docker:build": "docker-compose build",
     "docker:start": "docker-compose up -d",
-    "docker:stop": "docker-compose down"
+    "docker:stop": "docker-compose down -t 20"
   },
   "repository": {
     "type": "git",
