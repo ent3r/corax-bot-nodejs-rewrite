@@ -21,6 +21,7 @@ if (process.env.NODE_ENV !== "production") {
 import { Client } from "discord.js";
 import { loadCommands, setCooldowns } from "./util";
 import { message, guildCreate } from "./events/index";
+import disconnect from "./handlers/disconnect";
 logger.debug("Dependencies loaded");
 
 //? Setup services and connections. In this case just mongodb
@@ -53,6 +54,16 @@ client.on("message", (msg) => {
 //? When the bot is ready and logged in, logger.info it
 client.once("ready", () => {
   logger.info(`Bot logged in as ${client.user.tag} (${client.user.id})`);
+});
+
+process.once("SIGTERM", (signal) => {
+  console.log("SIGTERM RECIEVED!");
+  disconnect(signal, client);
+});
+
+process.once("SIGINT", (signal) => {
+  console.log("SIGINT RECIEVED!");
+  disconnect(signal, client);
 });
 
 //? Login the bot using process.env
