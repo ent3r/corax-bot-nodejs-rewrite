@@ -16,7 +16,7 @@ The following is a set of guidelines for contributing. These are mostly guidelin
     - [Issues](#issues)
     - [Code Styleguide](#code-styleguide)
     - [Pull Requests](#pull-requests)
-  - [What should I know before I get started](#what-should-i-know-before-i-get-started)
+  - [What should I know before I get started (TODO)](#what-should-i-know-before-i-get-started-todo)
   - [How Can I Contribute](#how-can-i-contribute)
 
 # Guidelines
@@ -27,17 +27,7 @@ The following are the guidelines we request you to follow in order to contribute
 
 ### Commit Messages
 
-The commit messages should follow the following pattern, along with being in the imperative present tense form (see [this][commit-message-guidelines]):
-
-```bash
-feat: Description # if a new feature is added
-fix: Description # if a bug is fixed
-refactor: Description # if code is refactored
-docs: Description # if documentation is added
-lint: Description # if a lint issue is fixed
-other: Description # if there are any changes that doesn't fit within the other categories
-config: Description # if any config changes are added
-```
+This project follows the [gitmoji][gitmoji-url] commit message system. Along with that, commit messages should be in the imperative present tense form (see [this][commit-message-guidelines]). The [gitmoji-cli][gitmoji-cli] can be a useful tool to install.
 
 ### Issues
 
@@ -64,7 +54,7 @@ Pull requests should have:
 - A concise commit message.
 - A description of what was changed/added.
 
-## What should I know before I get started
+## What should I know before I get started (TODO)
 
 <!-- TODO: Actually make this -->
 
@@ -88,3 +78,5 @@ Make sure to document the contributions well in the pull request.
 > It is not compulsory to follow the guidelines mentioned above, but it is strongly recommended.
 
 [commit-message-guidelines]: https://github.com/trein/dev-best-practices/wiki/Git-Commit-Best-Practices#write-good-commit-messages
+[gitmoji-url]: https://gitmoji.carloscuesta.me/
+[gitmoji-cli]: https://github.com/carloscuesta/gitmoji-cli
