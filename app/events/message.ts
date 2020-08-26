@@ -71,15 +71,22 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
   //? A big feature that checks if the command has a cooldown set. If it has, it checks if the
   //? user that ran the command is currently in the cooldown
   if (command.config.cooldown) {
+    //? Get the current time (in miliseconds since unix epoch), all the current cooldowns for a command,
+    //? and how long a cooldown is in miliseconds.
     const now = Date.now();
     const timestamps = client.cooldowns.get(command.config.name);
     const cooldownAmount = command.config.cooldown * 1000;
 
+    //? If the author's id is in the cooldown thing, that means they are currently in cooldown or just was
     if (timestamps.has(message.author.id)) {
+      //? Get when the cooldown was set, and add how long it was going to last, so we get when it will expire
       const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
 
+      //? If the now time is less than the expiration time, that means they are still under cooldown
       if (now < expirationTime) {
+        //? Get how long it is until the cooldown is done
         const timeLeft = expirationTime - now;
+        //? Send a message telling the author that they are under cooldown, and how long is left
         message.channel.send(
           `Command is under cooldown. Please wait another ${ms(timeLeft, {
             long: true,
@@ -89,7 +96,9 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
       }
     }
 
+    //? If they are not in the cooldown, get the commands cooldowns, and set the current time
     client.cooldowns.get(command.config.name).set(message.author.id, now);
+    //? Make a timeout to automatically delete the timeout when it has expired
     setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
   }
 

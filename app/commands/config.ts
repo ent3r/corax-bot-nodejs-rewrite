@@ -31,25 +31,33 @@ const commands = new CommandGroup([
 
       switch (mode) {
         case "get": {
+          //? Get the path the user wanted
           const path = args[1];
+
+          //? Find the config for the current server
           configModel
             .findOne({ server_id: message.guild.id })
             .then((document) => {
+              //? Make sure we know if the document doesn't exist, and give the user a proper error
               if (!document) {
                 message.channel.send(
                   "The config for this server seems to be missing! Please try running the command again (It should have been created after you ran that command)"
                 );
                 return;
               }
+
+              //? If the user provided a path, use that path and return its value
               if (path) {
                 message.channel.send(
                   `\`${path}\` => \`${get(document.toJSON(), path) || " "}\``
                 );
               } else {
+                //? There was no path provided. By default this means that it should just show the entire config
                 message.channel.send(
                   `Entire config:\n\`\`\`json\n${JSON.stringify(
                     document.toJSON(),
                     (key, value) => {
+                      //? Filter out the version and id keys
                       if (!["__v", "_id"].includes(key)) {
                         return value;
                       } else {
@@ -61,6 +69,7 @@ const commands = new CommandGroup([
                 );
               }
             })
+            //? Make sure we catch any errors and handle them correctly
             .catch((error) => {
               logger.warn(error);
               message.channel.send(
