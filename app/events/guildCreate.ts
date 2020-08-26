@@ -5,6 +5,13 @@ import configModel from "../models/serversettings";
 import { Client, Guild } from "discord.js";
 import logger from "../handlers/logging";
 
+
+/**
+ *Does all the nessecary actions when the bot joins a guild
+ *
+ * @param {Client} client The discord client
+ * @param {Guild} guild the guild that was joined
+ */
 const guildCreate = (client: Client, guild: Guild): void => {
   logger.info(`Joined new server: ${guild.name} (${guild.id})`);
   //? Make a new server config

@@ -15,6 +15,7 @@ const commands = new CommandGroup([
       },
     },
     (client: Client, message: Message, args: Array<string>): void => {
+      //? Combines the arguments into one string, splits it by each character, reverses it, and joins it back
       message.channel.send(args.join(" ").split("").reverse().join(""));
     }
   ),
@@ -30,6 +31,7 @@ const commands = new CommandGroup([
       },
     },
     (client: Client, message: Message, args: Array<string>): void => {
+      //? Joins the arguments, splits them by spaces (to remove substrings, so every word is its own), and then counts them
       message.channel.send(args.join(" ").split(" ").length);
     }
   ),

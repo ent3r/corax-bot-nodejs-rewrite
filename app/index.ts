@@ -56,6 +56,7 @@ client.once("ready", () => {
   logger.info(`Bot logged in as ${client.user.tag} (${client.user.id})`);
 });
 
+//? Handle closing signals
 process.once("SIGTERM", (signal) => {
   console.log("SIGTERM RECIEVED!");
   disconnect(signal, client);
