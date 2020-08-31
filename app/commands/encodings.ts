@@ -19,7 +19,7 @@ const base64decode = (input: string): string => {
   return bufferObj.toString("utf8");
 };
 
-const commands = new CommandGroup([
+const commands = new CommandGroup({ name: "Encodings", description: "Different encodings, like Base64"}, [
   new Command(
     {
       name: "base64",

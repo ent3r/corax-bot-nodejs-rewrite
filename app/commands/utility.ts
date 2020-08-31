@@ -3,7 +3,7 @@ import Command from "../typings/Command";
 
 import { Client, Message, MessageEmbed } from "discord.js";
 
-const commands = new CommandGroup([
+const commands = new CommandGroup({ name: "Utility", description: "Different utility commands, like ping"}, [
   new Command(
     {
       name: "reverse",

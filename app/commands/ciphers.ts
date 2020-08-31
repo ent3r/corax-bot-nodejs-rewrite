@@ -11,7 +11,7 @@ const rot = function rot(inputString: any, rotAmount: number) {
 };
 
 //? Make the initial command group
-const commands = new CommandGroup([
+const commands = new CommandGroup({ name: "Ciphers", description: "Different cipher commands, like Rot13" }, [
   //? Make a new command
   new Command(
     {
@@ -46,7 +46,7 @@ const commands = new CommandGroup([
       //? Send the final string, wrapping it in backticks to make it look better
       await message.channel.send(`\`\`\`${output}\`\`\``);
     }
-  )
+  ),
 ]);
 
 module.exports = commands;

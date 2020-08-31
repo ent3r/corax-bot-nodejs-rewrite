@@ -5,4 +5,11 @@ const help = (client: Client, message: Message, args: Array<string>): void => {
   return;
 };
 
-module.exports = new Command({ name: "help", aliases: ["info"] }, help);
+module.exports = new Command(
+  {
+    name: "help",
+    aliases: ["info"],
+    help: { description: "Prints out help pages", usage: "[ group ]" },
+  },
+  help
+);

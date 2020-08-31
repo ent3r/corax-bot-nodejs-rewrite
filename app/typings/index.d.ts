@@ -1,10 +1,15 @@
 import { Client, Message } from "discord.js";
 import { ICommand } from "./Command";
+import CommandGroup from "./CommandGroup";
 
 //? Idk how this works, but it does work. It adds commands and cooldowns to the client, without removing anything else
 declare module "discord.js" {
   export interface Client {
     commands: Collection<string, ICommand>;
+    commandGroups: Array<CommandGroup>;
+
+    helpPages: Collection<string, MessageEmbed>;
+
     cooldowns: Collection<string, Collection<string, number>>;
   }
 }
@@ -22,7 +27,7 @@ export interface CommandOptions {
   disabled?: boolean;
   guildOnly?: boolean;
   cooldown?: number;
-  help?: {
+  help: {
     description: string;
     category?: string;
     arguments?: Array<IArguments>;
@@ -36,3 +41,9 @@ export type CommandFunction = (
   message: Message,
   args: string[]
 ) => any | Promise<any>;
+
+
+export interface CommandGroupHelp {
+  name: string,
+  description: string
+}
