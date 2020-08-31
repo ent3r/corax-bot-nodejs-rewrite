@@ -10,6 +10,7 @@
     "dev": "cross-env NODE_ENV=development nodemon",
     "start": "cross-env NODE_ENV=production node build/index.js",
     "build": "tsc",
+    "inspect": "cross-env NODE_ENV=development nodemon --exec node --inspect -r ts-node/register app/index.ts",
     "docker:build-bot": "docker-compose build bot",
     "docker:start-bot": "docker-compose start bot",
     "docker:stop-bot": "docker-compose stop bot -t 20",
