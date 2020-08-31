@@ -52,24 +52,24 @@ const loadCommands = async (
     []
   );
 
-  //? Goes through a folder and finds all .js and .ts files
+  // Goes through a folder and finds all .js and .ts files
   const files = readdirSync(folder).filter(
     (file) => file.endsWith(".js") || file.endsWith(".ts")
   );
 
   logger.debug(`Found files while loading commands: ${files}`);
 
-  //? For every file
+  // For every file
   for (const file of files) {
-    //? Require it, making sure to add in the folder it is in
+    // Require it, making sure to add in the folder it is in
     const commands: CommandGroup | Command | void = await require(resolve(
       folder,
       file
     ));
 
     logger.debug(`Required file ${file}`);
-    //? Check if a command file contains multiple commands, indicated by class Commands
-    //? and add each of them to the collection if it is. Otherwise just add a single one
+    // Check if a command file contains multiple commands, indicated by class Commands
+    // and add each of them to the collection if it is. Otherwise just add a single one
     if (commands instanceof CommandGroup) {
       CommandGroups.push(commands);
 
@@ -87,7 +87,7 @@ const loadCommands = async (
 
   CommandGroups.push(ungroupedCommands);
 
-  //? Then return the new collection of commands
+  // Then return the new collection of commands
   logger.info(
     `Finished loading commands: ${CommandCollection.map(
       (command) => command.config.name
@@ -133,16 +133,16 @@ const loadHelpPages = (
  * @param {Client} client The client object
  */
 const setCooldowns = (client: Client): void => {
-  //? Make the cooldown collection that will be added to the client later
+  // Make the cooldown collection that will be added to the client later
   const cooldowns = new Collection<string, Collection<string, number>>();
 
-  //? For every command, add it to the collection. Using it's name as the key
+  // For every command, add it to the collection. Using it's name as the key
   client.commands.forEach((command) => {
     cooldowns.set(command.config.name, new Collection());
   });
   logger.debug("Added cooldowns for commands");
 
-  //? Add the cooldown collection to the client
+  // Add the cooldown collection to the client
   client.cooldowns = cooldowns;
 };
 
@@ -158,16 +158,16 @@ const getCommand = (
   // eslint-disable-next-line
   commandOrAlias: any
 ): Command =>
-  //? Try to find a command, and if we can't find it by the name provided by the user, check if it was an alias.
+  // Try to find a command, and if we can't find it by the name provided by the user, check if it was an alias.
   commandCollection.get(commandOrAlias) ||
   commandCollection.find(
-    //? These are the criteria that will be tested
+    // These are the criteria that will be tested
     (cmd) =>
-      //? The command has to have the aliases property
+      // The command has to have the aliases property
       cmd.config.aliases &&
-      //? It has to be longer than 0
+      // It has to be longer than 0
       cmd.config.aliases.length !== 0 &&
-      //? And it has to include the name provided
+      // And it has to include the name provided
       cmd.config.aliases.includes(commandOrAlias)
   );
 

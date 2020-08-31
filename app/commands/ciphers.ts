@@ -10,11 +10,11 @@ const rot = function rot(inputString: any, rotAmount: number) {
   });
 };
 
-//? Make the initial command group
+// Make the initial command group
 const commands = new CommandGroup(
   { name: "Ciphers", description: "Different cipher commands, like Rot13" },
   [
-    //? Make a new command
+    // Make a new command
     new Command(
       {
         name: "rot13",
@@ -25,27 +25,27 @@ const commands = new CommandGroup(
         },
       },
       async (client, message, args) => {
-        //? Turn all the args back into one
+        // Turn all the args back into one
         let _arguments = args.join(" ");
-        //? Remove all trailing and leading backticks `
+        // Remove all trailing and leading backticks `
         if (_arguments.startsWith("`") && _arguments.endsWith("`")) {
           _arguments = _arguments.substring(1, _arguments.length - 1);
         }
 
-        //? Create the array that stores the ROTed strings, along with their rot amount
+        // Create the array that stores the ROTed strings, along with their rot amount
         const outputArray: Array<any> = [];
         for (let i = 0; i < 26; i++) {
           outputArray.push({ i: i, rotString: rot(_arguments, i) });
         }
 
-        //? Create the output string
+        // Create the output string
         let output = "";
 
-        //? Add the ROTed strings to the output string
+        // Add the ROTed strings to the output string
         for (const object of outputArray) {
           output += `${object.i}: ${object.rotString}\n`;
         }
-        //? Send the final string, wrapping it in backticks to make it look better
+        // Send the final string, wrapping it in backticks to make it look better
         await message.channel.send(`\`\`\`${output}\`\`\``);
       }
     ),

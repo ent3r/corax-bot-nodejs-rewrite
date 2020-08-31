@@ -3,11 +3,11 @@ import logger from "./handlers/logging";
 logger.warn(`Logging initialized. Bot starting. Date: ${new Date()}`);
 
 logger.debug("Starting to load dependencies");
-//? Loading dependencies
+// Loading dependencies
 import { resolve } from "path";
 import * as dotenv from "dotenv";
 
-//? Using dotenv to get .env file variables while in developer mode
+// Using dotenv to get .env file variables while in developer mode
 if (process.env.NODE_ENV !== "production") {
   dotenv.config({
     // This is set to development.env instead of ../development.env because
@@ -17,23 +17,23 @@ if (process.env.NODE_ENV !== "production") {
   logger.info("Loaded dotenv file");
 }
 
-//? Loading discord.js related dependencies
+// Loading discord.js related dependencies
 import { Client } from "discord.js";
 import { loadCommands, setCooldowns, loadHelpPages } from "./util";
 import { message, guildCreate } from "./events/index";
 import disconnect from "./handlers/disconnect";
 logger.debug("Dependencies loaded");
 
-//? Setup services and connections. In this case just mongodb
+// Setup services and connections. In this case just mongodb
 require("./handlers/mongodb");
 
-//? Create the client, and disable the option for it to mention @everyone
+// Create the client, and disable the option for it to mention @everyone
 const client = new Client({
   disableMentions: "everyone",
 });
 logger.debug("Created Client");
 
-//? Load all the commands in use by the bot, and add them to a collection managing delays and cooldowns
+// Load all the commands in use by the bot, and add them to a collection managing delays and cooldowns
 loadCommands(resolve(__dirname, "commands"))
   .then((commands) => {
     client.commands = commands.commands;
@@ -43,22 +43,22 @@ loadCommands(resolve(__dirname, "commands"))
   })
   .catch((err) => console.error(err));
 
-//? Makes sure a document with server settings gets created when the bot joins a new server
+// Makes sure a document with server settings gets created when the bot joins a new server
 client.on("guildCreate", (guild) => {
   guildCreate(client, guild);
 });
 
-//? Handle the message event in its own file
+// Handle the message event in its own file
 client.on("message", (msg) => {
   message(client, msg);
 });
 
-//? When the bot is ready and logged in, logger.info it
+// When the bot is ready and logged in, logger.info it
 client.once("ready", () => {
   logger.info(`Bot logged in as ${client.user.tag} (${client.user.id})`);
 });
 
-//? Handle closing signals
+// Handle closing signals
 process.once("SIGTERM", (signal) => {
   console.log("SIGTERM RECIEVED!");
   disconnect(signal, client);
@@ -69,5 +69,5 @@ process.once("SIGINT", (signal) => {
   disconnect(signal, client);
 });
 
-//? Login the bot using process.env
+// Login the bot using process.env
 client.login(process.env.DISCORD_TOKEN);

@@ -17,7 +17,7 @@ const commands = new CommandGroup(
         },
       },
       (client: Client, message: Message, args: Array<string>): void => {
-        //? Combines the arguments into one string, splits it by each character, reverses it, and joins it back
+        // Combines the arguments into one string, splits it by each character, reverses it, and joins it back
         message.channel.send(args.join(" ").split("").reverse().join(""));
       }
     ),
@@ -33,7 +33,7 @@ const commands = new CommandGroup(
         },
       },
       (client: Client, message: Message, args: Array<string>): void => {
-        //? Joins the arguments, splits them by spaces (to remove substrings, so every word is its own), and then counts them
+        // Joins the arguments, splits them by spaces (to remove substrings, so every word is its own), and then counts them
         message.channel.send(args.join(" ").split(" ").length);
       }
     ),
@@ -53,14 +53,14 @@ const commands = new CommandGroup(
         message: Message,
         _args: Array<string>
       ): Promise<void> => {
-        //? Create a new embed. This is the embed that will be edited, and it is therefore saved
+        // Create a new embed. This is the embed that will be edited, and it is therefore saved
         const embed = new MessageEmbed({
           title: "Pinging...",
         }).setColor("#FFCC00");
 
-        //? Send the embed, and with the returned message object
+        // Send the embed, and with the returned message object
         message.channel.send(embed).then((m) => {
-          //? Change the embed to contain the correct values
+          // Change the embed to contain the correct values
           embed
             .setTitle("Pong!")
             .setColor("#00FF00")
@@ -79,10 +79,10 @@ const commands = new CommandGroup(
               "Discord websocket ping",
               `${Math.round(client.ws.ping)}ms`
             );
-          //? And then edit the message we sent with this new embed
+          // And then edit the message we sent with this new embed
           m.edit(embed);
         });
-        //? Return because why not
+        // Return because why not
         return;
       }
     ),
