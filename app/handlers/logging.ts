@@ -7,6 +7,7 @@ const logger = winston.createLogger({
     new winston.transports.Console({
       level: "debug",
       format: winston.format.combine(
+        winston.format.colorize({ all: true, colors: { debug: "gray" } }),
         winston.format.timestamp({ format: "HH:mm:ss" }),
         winston.format.printf(
           (info) => `${info.timestamp} - ${info.level}: ${info.message}`
