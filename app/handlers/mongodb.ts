@@ -15,7 +15,7 @@ const configAndCacheDB = mongoose.createConnection(
 
 // Create a handler for error messages. In this case just warn about it so the bot doesn't crash
 configAndCacheDB.on("error", (err) => {
-  logger.warn(err);
+  throw err;
 });
 
 // Create a function that will be called once the database connection is open and ready
@@ -33,7 +33,7 @@ const ctfDB = mongoose.createConnection(
 
 // Create a handler for error messages. In this case just warn about it so the bot doesn't crash
 ctfDB.on("error", (err) => {
-  logger.warn(err);
+  throw err;
 });
 
 // Create a function that will be called once the database connection is open and ready

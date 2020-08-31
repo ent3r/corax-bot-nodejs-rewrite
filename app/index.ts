@@ -41,7 +41,10 @@ loadCommands(resolve(__dirname, "commands"))
     client.helpPages = loadHelpPages(commands.commandGroups);
     setCooldowns(client);
   })
-  .catch((err) => console.error(err));
+  .catch((err) => {
+    // If a command doesn't load, throw the error
+    throw err;
+  });
 
 // Makes sure a document with server settings gets created when the bot joins a new server
 client.on("guildCreate", (guild) => {
