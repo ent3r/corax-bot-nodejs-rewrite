@@ -19,7 +19,7 @@ if (process.env.NODE_ENV !== "production") {
 
 //? Loading discord.js related dependencies
 import { Client } from "discord.js";
-import { loadCommands, setCooldowns } from "./util";
+import { loadCommands, setCooldowns, loadHelpPages } from "./util";
 import { message, guildCreate } from "./events/index";
 import disconnect from "./handlers/disconnect";
 logger.debug("Dependencies loaded");
@@ -38,6 +38,7 @@ loadCommands(resolve(__dirname, "commands"))
   .then((commands) => {
     client.commands = commands.commands;
     client.commandGroups = commands.commandGroups;
+    client.helpPages = loadHelpPages(commands.commandGroups);
     setCooldowns(client);
   })
   .catch((err) => console.error(err));

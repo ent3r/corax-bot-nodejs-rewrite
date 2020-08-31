@@ -1,4 +1,4 @@
-import { Collection, Client } from "discord.js";
+import { Collection, Client, MessageEmbed } from "discord.js";
 
 import { resolve } from "path";
 
@@ -95,6 +95,36 @@ const loadCommands = async (
   );
   return { commands: CommandCollection, commandGroups: CommandGroups };
 };
+
+const loadHelpPages = (
+  commandGroups: Array<CommandGroup>
+): Client["helpPages"] => {
+  const HelpPages: Client["helpPages"] = new Collection();
+
+  const allGroupsEmbed = new MessageEmbed();
+
+  commandGroups.forEach((group) => {
+    allGroupsEmbed.addField(group.help.name, group.help.description);
+  });
+
+  HelpPages.set("all", allGroupsEmbed);
+
+  commandGroups.forEach((group) => {
+    const groupEmbed = new MessageEmbed({
+      title: group.help.name,
+    });
+
+    let description = "";
+
+    group.commands.forEach((command) => {
+      description += `\n\n\`${command.config.name} ${command.config.help.usage}\`\n${command.config.help.description}`;
+    });
+
+    groupEmbed.setDescription(group.help.description + description);
+    HelpPages.set(group.help.name.toLowerCase(), groupEmbed);
+  });
+
+  return HelpPages;
 };
 
 /**
@@ -141,4 +171,4 @@ const getCommand = (
       cmd.config.aliases.includes(commandOrAlias)
   );
 
-export { loadCommands, setCooldowns, getCommand };
+export { loadCommands, setCooldowns, getCommand, loadHelpPages };
