@@ -36,7 +36,8 @@ logger.debug("Created Client");
 //? Load all the commands in use by the bot, and add them to a collection managing delays and cooldowns
 loadCommands(resolve(__dirname, "commands"))
   .then((commands) => {
-    client.commands = commands;
+    client.commands = commands.commands;
+    client.commandGroups = commands.commandGroups;
     setCooldowns(client);
   })
   .catch((err) => console.error(err));

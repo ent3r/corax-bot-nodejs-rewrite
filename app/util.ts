@@ -38,8 +38,19 @@ const addCommand = (
  */
 const loadCommands = async (
   folder = "./commands/"
-): Promise<Collection<string, ICommand>> => {
+): Promise<{
+  commands: Client["commands"];
+  commandGroups: Client["commandGroups"];
+}> => {
   const CommandCollection = new Collection<string, ICommand>();
+  const CommandGroups: Client["commandGroups"] = [];
+  const ungroupedCommands = new CommandGroup(
+    {
+      name: "Ungrouped",
+      description: "Commands that are not in a particular group",
+    },
+    []
+  );
 
   //? Goes through a folder and finds all .js and .ts files
   const files = readdirSync(folder).filter(
@@ -51,21 +62,30 @@ const loadCommands = async (
   //? For every file
   for (const file of files) {
     //? Require it, making sure to add in the folder it is in
-    const commands = await require(resolve(folder, file));
+    const commands: CommandGroup | Command | void = await require(resolve(
+      folder,
+      file
+    ));
 
     logger.debug(`Required file ${file}`);
     //? Check if a command file contains multiple commands, indicated by class Commands
     //? and add each of them to the collection if it is. Otherwise just add a single one
     if (commands instanceof CommandGroup) {
+      CommandGroups.push(commands);
+
       commands.commands.forEach((command) => {
         addCommand(CommandCollection, command);
       });
     } else if (commands instanceof Command) {
       addCommand(CommandCollection, commands);
+
+      ungroupedCommands.commands.push(commands);
     } else {
       continue;
     }
   }
+
+  CommandGroups.push(ungroupedCommands);
 
   //? Then return the new collection of commands
   logger.info(
@@ -73,7 +93,8 @@ const loadCommands = async (
       (command) => command.config.name
     )}`
   );
-  return CommandCollection;
+  return { commands: CommandCollection, commandGroups: CommandGroups };
+};
 };
 
 /**
