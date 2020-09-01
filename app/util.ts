@@ -107,7 +107,7 @@ const loadHelpPages = (
     allGroupsEmbed.addField(group.help.name, group.help.description);
   });
 
-  HelpPages.set("all", allGroupsEmbed);
+  HelpPages.set("__default__", allGroupsEmbed);
 
   commandGroups.forEach((group) => {
     const groupEmbed = new MessageEmbed({

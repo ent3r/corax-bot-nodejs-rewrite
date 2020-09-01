@@ -3,7 +3,7 @@ import Command from "../typings/Command";
 
 const help = (client: Client, message: Message, args: Array<string>): void => {
   if (!args[0]) {
-    message.channel.send(client.helpPages.get("all"));
+    message.channel.send(client.helpPages.get("__default__"));
   } else {
     const helpPage = client.helpPages.get(args[0].toLowerCase());
     if (!helpPage) {
