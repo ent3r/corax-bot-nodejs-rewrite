@@ -60,6 +60,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
     return;
   }
 
+  /*
   // Checks if there are no passed arguments, and if the command provides a usage
   if (parsed.arguments.length === 0 && command.config.help.arguments) {
     message.channel.send(
@@ -67,6 +68,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
     );
     return;
   }
+  */
 
   // A big feature that checks if the command has a cooldown set. If it has, it checks if the
   // user that ran the command is currently in the cooldown
