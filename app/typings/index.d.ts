@@ -44,8 +44,7 @@ export type CommandFunction = (
   args: string[]
 ) => any | Promise<any>;
 
-
 export interface CommandGroupHelp {
-  name: string,
-  description: string
+  name: string;
+  description: string;
 }
