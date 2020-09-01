@@ -14,7 +14,7 @@ COPY yarn.lock /tmp
 WORKDIR /tmp
 
 # Install all the dependencies
-RUN yarn
+RUN yarn install --production=true
 
 # Make the directory the bot will reside in and copy the node modules into it
 RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app/
