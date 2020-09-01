@@ -13,7 +13,13 @@ const commands = new CommandGroup(
           description: "Reverses a given string",
           category: "Utility",
           usage: "<string>",
-          arguments: [{ name: "input", required: true }],
+          arguments: [
+            {
+              name: "input",
+              description: "The input string you want reversed.",
+              required: true,
+            },
+          ],
         },
       },
       (client: Client, message: Message, args: Array<string>): void => {
@@ -29,7 +35,13 @@ const commands = new CommandGroup(
           description: "Counts the amount of words in a message",
           category: "Utility",
           usage: "<string>",
-          arguments: [{ name: "string", required: true }],
+          arguments: [
+            {
+              name: "string",
+              description: "The string you want to get words counted in.",
+              required: true,
+            },
+          ],
         },
       },
       (client: Client, message: Message, args: Array<string>): void => {

@@ -14,10 +14,10 @@ const command = new Command(
       description: "Sets up config stuff",
       usage: "<get | set>",
       category: "Utility",
-      arguments: [
-        { name: "get | set | show", required: true },
+      /*arguments: [
+        { name: "get | set", required: true },
         { name: "value", required: false },
-      ],
+      ],*/
     },
   },
   async (

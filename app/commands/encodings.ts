@@ -31,8 +31,16 @@ const commands = new CommandGroup(
           category: "encodings",
           usage: "<encode | decode> <...string>",
           arguments: [
-            { name: "encode | decode", required: true },
-            { name: "...string", required: true },
+            {
+              name: "encode | decode",
+              description: "What you want to do with the input string.",
+              required: true,
+            },
+            {
+              name: "...string",
+              description: "The string you want to either decode or encode.",
+              required: true,
+            },
           ],
         },
       },
