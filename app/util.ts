@@ -104,24 +104,40 @@ const loadHelpPages = (
   const allGroupsEmbed = new MessageEmbed();
 
   commandGroups.forEach((group) => {
-    allGroupsEmbed.addField(group.help.name, group.help.description);
+    const description = `${
+      group.help.description
+    }\nCommands in this category: ${group.commands
+      .map((command) => `\`${command.config.name}\``)
+      .join(", ")}`;
+    allGroupsEmbed.addField(group.help.name, description);
   });
 
   HelpPages.set("__default__", allGroupsEmbed);
 
   commandGroups.forEach((group) => {
-    const groupEmbed = new MessageEmbed({
-      title: group.help.name,
-    });
-
-    let description = "";
-
     group.commands.forEach((command) => {
-      description += `\n\n\`${command.config.name} ${command.config.help.usage}\`\n${command.config.help.description}`;
-    });
+      let description = `${command.config.help.description}\nUsage: \`${command.config.name} ${command.config.help.usage}\`\n\n`;
+      if (command.config.help.arguments) {
+        description += `Arguments:\n${command.config.help.arguments
+          .map(
+            (argument) =>
+              `- \`${
+                argument.required ? `<${argument.name}>` : `[${argument.name}]`
+              }\`\n\t${argument.description}\n\tRequired: ${
+                argument.required ? "Yes" : "No"
+              }`
+          )
+          .join("\n\n")}`;
+      } else {
+        description += "Command has no arguments configured";
+      }
 
-    groupEmbed.setDescription(group.help.description + description);
-    HelpPages.set(group.help.name.toLowerCase(), groupEmbed);
+      const embed = new MessageEmbed({
+        title: command.config.name,
+        description: description,
+      });
+      HelpPages.set(command.config.name, embed);
+    });
   });
 
   return HelpPages;
