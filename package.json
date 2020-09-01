@@ -35,6 +35,8 @@
   },
   "homepage": "https://github.com/ent3r/corax-bot-nodejs-rewrite#readme",
   "dependencies": {
+    "@types/mongoose": "^5.7.36",
+    "cross-env": "^7.0.2",
     "discord-command-parser": "^1.4.3",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
@@ -47,10 +49,9 @@
   },
   "devDependencies": {
     "@types/eslint": "^7.2.1",
-    "@types/mongoose": "^5.7.36",
+    "@types/lodash": "^4.14.161",
     "@typescript-eslint/eslint-plugin": "^3.10.1",
     "@typescript-eslint/parser": "^3.10.1",
-    "cross-env": "^7.0.2",
     "eslint": "^7.7.0"
   }
 }
