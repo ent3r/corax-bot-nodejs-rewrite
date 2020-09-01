@@ -18,6 +18,7 @@ declare module "discord.js" {
 // How the arguments for a command looks
 interface IArguments {
   name: string;
+  description: string;
   required: boolean;
 }
 
