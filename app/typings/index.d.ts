@@ -25,7 +25,7 @@ interface IArguments {
 // The interface that handles everything that has to do with command config shit. Like name, aliases, etc
 export interface CommandOptions {
   name: string;
-  aliases?: string[] | undefined[];
+  aliases?: string[];
   disabled?: boolean;
   guildOnly?: boolean;
   cooldown?: number;
