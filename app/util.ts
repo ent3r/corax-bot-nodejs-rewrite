@@ -104,6 +104,7 @@ const loadHelpPages = (
   const allGroupsEmbed = new MessageEmbed({
     title: "Help menu",
     description: "These are all the commands available",
+    color: 8194685,
   });
 
   commandGroups.forEach((group) => {
@@ -143,6 +144,7 @@ const loadHelpPages = (
       const embed = new MessageEmbed({
         title: command.config.name,
         description: description,
+        color: 8194685,
       });
       HelpPages.set(command.config.name, embed);
     });
