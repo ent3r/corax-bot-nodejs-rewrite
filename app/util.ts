@@ -116,9 +116,14 @@ const loadHelpPages = (
 
   commandGroups.forEach((group) => {
     group.commands.forEach((command) => {
-      let description = `${command.config.help.description}\nUsage: \`${command.config.name} ${command.config.help.usage}\`\n\n`;
+      let description = `${command.config.help.description}\nUsage: \`${command.config.name} ${command.config.help.usage}\`\n`;
+      if (command.config.aliases) {
+        description += `Aliases: ${command.config.aliases
+          .map((alias) => `\`${alias}\``)
+          .join(", ")}`;
+      }
       if (command.config.help.arguments) {
-        description += `Arguments:\n${command.config.help.arguments
+        description += `\n\nArguments:\n${command.config.help.arguments
           .map(
             (argument) =>
               `- \`${
@@ -129,7 +134,7 @@ const loadHelpPages = (
           )
           .join("\n\n")}`;
       } else {
-        description += "Command has no arguments configured";
+        description += "\n\nCommand has no arguments configured";
       }
 
       const embed = new MessageEmbed({
