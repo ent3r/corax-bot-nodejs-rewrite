@@ -173,18 +173,26 @@ const getCommand = (
   commandCollection: Collection<string, Command>,
   // eslint-disable-next-line
   commandOrAlias: any
-): Command =>
+): Command | null => {
   // Try to find a command, and if we can't find it by the name provided by the user, check if it was an alias.
-  commandCollection.get(commandOrAlias) ||
-  commandCollection.find(
-    // These are the criteria that will be tested
-    (cmd) =>
-      // The command has to have the aliases property
-      cmd.config.aliases &&
-      // It has to be longer than 0
-      cmd.config.aliases.length !== 0 &&
-      // And it has to include the name provided
-      cmd.config.aliases.includes(commandOrAlias)
+  return (
+    commandCollection.get(commandOrAlias) ||
+    commandCollection.find(
+      // These are the criteria that will be tested
+      (cmd) =>
+        // The command has to have the aliases property
+        {
+          /* The command has to have the aliases property*/
+          return (
+            cmd.config.aliases &&
+            // It has to be longer than 0
+            cmd.config.aliases.length !== 0 &&
+            // And it has to include the name provided
+            cmd.config.aliases.includes(commandOrAlias)
+          );
+        }
+    )
   );
+};
 
 export { loadCommands, setCooldowns, getCommand, loadHelpPages };
