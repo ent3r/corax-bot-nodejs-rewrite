@@ -1,17 +1,18 @@
 import { Client, Message } from "discord.js";
 import Command from "../typings/Command";
+import { getCommand } from "../util";
 
 const help = (client: Client, message: Message, args: Array<string>): void => {
   if (!args[0]) {
     message.channel.send(client.helpPages.get("__default__"));
   } else {
-    const helpPage = client.helpPages.get(args[0].toLowerCase());
-    if (!helpPage) {
-      message.channel.send(
-        "Could not find a help page for that command.\n**Tip:** Commands use their full names for help pages, not aliases. Run `help` in order to see all commands"
-      );
+    const command = getCommand(client.commands, args[0].toLowerCase());
+    if (!command) {
+      message.channel.send("Could not find a help page for that command.");
       return;
     }
+    const helpPage = client.helpPages.get(command.config.name);
+
     message.channel.send(helpPage);
   }
 };
