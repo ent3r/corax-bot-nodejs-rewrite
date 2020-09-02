@@ -101,7 +101,10 @@ const loadHelpPages = (
 ): Client["helpPages"] => {
   const HelpPages: Client["helpPages"] = new Collection();
 
-  const allGroupsEmbed = new MessageEmbed();
+  const allGroupsEmbed = new MessageEmbed({
+    title: "Help menu",
+    description: "These are all the commands available",
+  });
 
   commandGroups.forEach((group) => {
     const description = `${
