@@ -20,11 +20,7 @@ const command = new Command(
       ],*/
     },
   },
-  async (
-    client: Client,
-    message: Message,
-    args: Array<string>
-  ): Promise<void> => {
+  async (client: Client, message: Message, args: string[]): Promise<void> => {
     const mode = args[0];
 
     switch (mode) {

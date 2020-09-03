@@ -1,12 +1,6 @@
-import { CommandOptions, CommandFunction } from ".";
-
-// The interface that is used for typing and stuff in the code
-export interface ICommand {
-  config: CommandOptions;
-  run: CommandFunction;
-}
+import { CommandOptions, CommandFunction, ICommand } from ".";
 
 // Export the class that is used. This will then be used as new Command();
-export default class Command {
+export default class Command implements ICommand {
   constructor(public config: CommandOptions, public run: CommandFunction) {}
 }

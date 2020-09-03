@@ -20,7 +20,7 @@ const challengeSchema = new Schema({
 interface ISchema extends Document {
   ctf_name: string;
   ctf_channel_id: number;
-  challenges: Array<IChallengeSchema>;
+  challenges: IChallengeSchema[];
 }
 
 const schema = new Schema({

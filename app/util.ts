@@ -4,7 +4,7 @@ import { resolve } from "path";
 
 import { readdirSync } from "fs";
 
-import Command, { ICommand } from "./typings/Command";
+import Command from "./typings/Command";
 import CommandGroup from "./typings/CommandGroup";
 
 import logger from "./handlers/logging";
@@ -18,7 +18,7 @@ import logger from "./handlers/logging";
  */
 const addCommand = (
   collection: Collection<string, any>,
-  command: ICommand
+  command: Command
 ): void => {
   if (command.config.disabled) {
     return;
@@ -42,7 +42,7 @@ const loadCommands = async (
   commands: Client["commands"];
   commandGroups: Client["commandGroups"];
 }> => {
-  const CommandCollection = new Collection<string, ICommand>();
+  const CommandCollection = new Collection<string, Command>();
   const CommandGroups: Client["commandGroups"] = [];
   const ungroupedCommands = new CommandGroup(
     {
@@ -97,7 +97,7 @@ const loadCommands = async (
 };
 
 const loadHelpPages = (
-  commandGroups: Array<CommandGroup>
+  commandGroups: CommandGroup[]
 ): Client["helpPages"] => {
   const HelpPages: Client["helpPages"] = new Collection();
 

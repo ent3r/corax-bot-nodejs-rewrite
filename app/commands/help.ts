@@ -1,8 +1,13 @@
 import { Client, Message } from "discord.js";
 import Command from "../typings/Command";
 import { getCommand } from "../util";
+import { CommandFunction } from "../typings";
 
-const help = (client: Client, message: Message, args: Array<string>): void => {
+const help: CommandFunction = (
+  client: Client,
+  message: Message,
+  args: string[]
+): void => {
   if (!args[0]) {
     message.channel.send(client.helpPages.get("__default__"));
   } else {

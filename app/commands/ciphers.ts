@@ -1,5 +1,6 @@
 import CommandGroup from "../typings/CommandGroup";
 import Command from "../typings/Command";
+import { Message, Client } from "discord.js";
 
 //* From stackoverflow: https://stackoverflow.com/a/617685/9088682
 const rot = function rot(inputString: any, rotAmount: number) {
@@ -24,7 +25,7 @@ const commands = new CommandGroup(
           usage: "<string-to-be-rot'ed>",
         },
       },
-      async (client, message, args) => {
+      async (client: Client, message: Message, args: string[]) => {
         // Turn all the args back into one
         let _arguments = args.join(" ");
         // Remove all trailing and leading backticks `
@@ -33,7 +34,7 @@ const commands = new CommandGroup(
         }
 
         // Create the array that stores the ROTed strings, along with their rot amount
-        const outputArray: Array<any> = [];
+        const outputArray = [];
         for (let i = 0; i < 26; i++) {
           outputArray.push({ i: i, rotString: rot(_arguments, i) });
         }

@@ -44,7 +44,7 @@ const commands = new CommandGroup(
           ],
         },
       },
-      (client: Client, message: Message, args: Array<string>): void => {
+      (client: Client, message: Message, args: string[]): void => {
         if (!["decode", "encode"].includes(args[0].toLowerCase())) {
           message.channel.send(
             `Unrecongnized option \`${args[0]}\`. Must be either of \`encode\` or \`decode\``
