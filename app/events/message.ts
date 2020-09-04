@@ -34,8 +34,9 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
     // And add it to the database
     try {
       await serverConfig.save();
+      logger.info(`Created config for guild ${message.guild.id}`);
     } catch {
-      (error) => console.warn(error);
+      (error) => logger.warn(error);
     }
   }
 
