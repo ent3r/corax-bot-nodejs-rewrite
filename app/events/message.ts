@@ -49,7 +49,7 @@ const onMessage = async (client: Client, message: Message): Promise<void> => {
   }
 
   // Get the command. If the command couldnt' be found, check to see if the command has any aliases and then use that.
-  const command = getCommand(client.commands, parsed.command);
+  const command = getCommand(client.commands, parsed.command.toLowerCase());
 
   // If the command wasn't found, it most likely doesn't exist. Return
   if (!command) return;

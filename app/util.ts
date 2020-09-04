@@ -27,7 +27,7 @@ const addCommand = (
     logger.warn("Command missing name");
     return;
   }
-  collection.set(command.config.name, command);
+  collection.set(command.config.name.toLowerCase(), command);
 };
 
 /**
