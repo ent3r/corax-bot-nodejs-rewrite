@@ -96,9 +96,7 @@ const loadCommands = async (
   return { commands: CommandCollection, commandGroups: CommandGroups };
 };
 
-const loadHelpPages = (
-  commandGroups: CommandGroup[]
-): Client["helpPages"] => {
+const loadHelpPages = (commandGroups: CommandGroup[]): Client["helpPages"] => {
   const HelpPages: Client["helpPages"] = new Collection();
 
   const allGroupsEmbed = new MessageEmbed({
