@@ -192,7 +192,7 @@ const setCooldowns = (client: Client): void => {
 const getCommand = (
   commandCollection: Collection<string, Command>,
   // eslint-disable-next-line
-  commandOrAlias: any
+  commandOrAlias: string
 ): Command | null => {
   // Try to find a command, and if we can't find it by the name provided by the user, check if it was an alias.
   return (
