@@ -118,9 +118,14 @@ const loadHelpPages = (commandGroups: CommandGroup[]): Client["helpPages"] => {
 
   commandGroups.forEach((group) => {
     group.commands.forEach((command) => {
-      let description = `${command.config.help.description}\nUsage: \`${command.config.name} ${command.config.help.usage}\`\n`;
+      const embed = new MessageEmbed({
+        title: command.config.name,
+        color: 8194685,
+      });
+
+      let description = `${command.config.help.description}\nUsage: \`${command.config.name} ${command.config.help.usage}\``;
       if (command.config.aliases) {
-        description += `Aliases: ${command.config.aliases
+        description += `\nAliases: ${command.config.aliases
           .map((alias) => `\`${alias}\``)
           .join(", ")}`;
       }
@@ -144,6 +149,9 @@ const loadHelpPages = (commandGroups: CommandGroup[]): Client["helpPages"] => {
         description: description,
         color: 8194685,
       });
+
+      embed.setDescription(description);
+
       HelpPages.set(command.config.name, embed);
     });
   });
