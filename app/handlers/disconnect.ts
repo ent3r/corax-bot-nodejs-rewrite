@@ -1,5 +1,4 @@
 import { Client } from "discord.js";
-import { configAndCacheDB, ctfDB } from "./mongodb";
 import * as mongoose from "mongoose";
 
 // Export the function that will be ran when we get a shutdown signal. This includes:
@@ -14,9 +13,7 @@ export default function disconnect(
     // Log out from discord, and close the bot
     client.destroy();
     process.stdout.write("Discord.js disconnected... ");
-    // Close the connections to the databases, and disconnect mongoose completely
-    configAndCacheDB.close();
-    ctfDB.close();
+    // Close the connections to the database
     mongoose.disconnect();
     process.stdout.write("Mongoose disconnected... ");
   } catch {

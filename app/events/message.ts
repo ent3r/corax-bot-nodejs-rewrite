@@ -1,7 +1,7 @@
 import { Client, Message } from "discord.js";
 
 // Make sure we have the model used to store server settings
-import configModel from "../models/serversettings";
+import { ServerConfig } from "../models";
 
 // We need the parser in order to parse incoming messages
 import * as parser from "discord-command-parser";
@@ -20,19 +20,23 @@ import { getCommand } from "../util";
  */
 const onMessage = async (client: Client, message: Message): Promise<void> => {
   // Try to find the server config in the database
-  let serverConfig = await configModel.findOne({
-    server_id: message.guild.id,
+  let serverConfig = await ServerConfig.findOne({
+    serverID: message.guild.id,
   });
 
   // But if it couldn't be found
   if (!serverConfig) {
     // Make a new one
-    serverConfig = new configModel({
-      server_id: message.guild.id,
+    serverConfig = new ServerConfig({
+      serverID: message.guild.id,
     });
 
     // And add it to the database
-    serverConfig.save().catch((error) => console.warn(error));
+    try {
+      await serverConfig.save();
+    } catch {
+      (error) => console.warn(error);
+    }
   }
 
   // Then get the prefix, using cb; as a default if it couldn't be found

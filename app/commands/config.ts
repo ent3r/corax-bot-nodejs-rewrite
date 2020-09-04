@@ -2,10 +2,10 @@ import Command from "../typings/Command";
 
 import { Client, Message } from "discord.js";
 
-import configModel from "../models/serversettings";
 import logger from "../handlers/logging";
 
 import { get } from "lodash";
+import { ServerConfig } from "../models";
 
 const command = new Command(
   {
@@ -29,8 +29,8 @@ const command = new Command(
         const path = args[1];
 
         // Find the config for the current server
-        configModel
-          .findOne({ server_id: message.guild.id })
+        ServerConfig
+          .findOne({ serverID: message.guild.id })
           .then((document) => {
             // Make sure we know if the document doesn't exist, and give the user a proper error
             if (!document) {
