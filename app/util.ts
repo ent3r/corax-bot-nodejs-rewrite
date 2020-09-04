@@ -144,11 +144,15 @@ const loadHelpPages = (commandGroups: CommandGroup[]): Client["helpPages"] => {
         description += "\n\nCommand has no arguments configured";
       }
 
-      const embed = new MessageEmbed({
-        title: command.config.name,
-        description: description,
-        color: 8194685,
-      });
+      if (command.config.subcommands) {
+        description += "\n\n**Subcommands:**";
+        command.config.subcommands.forEach((subcommand) => {
+          embed.addField(
+            subcommand.config.name,
+            `${subcommand.config.help.description}\nUsage: \`${command.config.name} ${subcommand.config.name} ${subcommand.config.help.usage}\``
+          );
+        });
+      }
 
       embed.setDescription(description);
 
