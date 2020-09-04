@@ -22,6 +22,7 @@ import { Client } from "discord.js";
 import { loadCommands, setCooldowns, loadHelpPages } from "./util";
 import { message, guildCreate } from "./events/index";
 import disconnect from "./handlers/disconnect";
+import guildDelete from "./events/guildDelete";
 logger.debug("Dependencies loaded");
 
 // Setup services and connections. In this case just mongodb
@@ -49,6 +50,10 @@ loadCommands(resolve(__dirname, "commands"))
 // Makes sure a document with server settings gets created when the bot joins a new server
 client.on("guildCreate", (guild) => {
   guildCreate(client, guild);
+});
+
+client.on("guildDelete", (guild) => {
+  guildDelete(client, guild);
 });
 
 // Handle the message event in its own file
