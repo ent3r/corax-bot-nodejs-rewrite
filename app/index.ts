@@ -63,12 +63,10 @@ client.once("ready", () => {
 
 // Handle closing signals
 process.once("SIGTERM", (signal) => {
-  console.log("SIGTERM RECIEVED!");
   disconnect(signal, client);
 });
 
 process.once("SIGINT", (signal) => {
-  console.log("SIGINT RECIEVED!");
   disconnect(signal, client);
 });
 

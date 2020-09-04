@@ -8,7 +8,7 @@ export default function disconnect(
   signal: NodeJS.Signals,
   client: Client
 ): void {
-  process.stdout.write("Recieved SIGTERM signal! Closing connections... ");
+  process.stdout.write(`Recieved ${signal}! Closing connections... `);
   try {
     // Log out from discord, and close the bot
     client.destroy();
