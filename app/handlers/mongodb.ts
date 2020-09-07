@@ -36,4 +36,8 @@ database.once("open", () => {
   );
 });
 
+database.on("disconnected", (..._) => {
+  logger.warn("Disconnected from database");
+});
+
 export default database;
