@@ -11,7 +11,8 @@ mongoose
   .connect(
     `${process.env.MONGODB_ROOT_URI}/${
       process.env.MONGODB_DATABASE || "coraxbot-database"
-    }`
+    }`,
+    { serverSelectionTimeoutMS: 15000 }
   )
   .then()
   .catch((err) => {
