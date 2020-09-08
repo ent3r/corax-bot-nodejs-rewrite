@@ -1,5 +1,7 @@
 import { Client } from "discord.js";
 import * as mongoose from "mongoose";
+import logger from "./logging";
+import { cache } from "./cache";
 
 // Export the function that will be ran when we get a shutdown signal. This includes:
 // - Logging out of discord
@@ -8,20 +10,23 @@ export default function disconnect(
   signal: NodeJS.Signals,
   client: Client
 ): void {
-  process.stdout.write(`Recieved ${signal}! Closing connections... `);
+  logger.warn(`Recieved ${signal}! Closing connections... `);
   try {
     // Log out from discord, and close the bot
     client.destroy();
-    process.stdout.write("Discord.js disconnected... ");
+    logger.info("Discord.js disconnected... ");
     // Close the connections to the database
     mongoose.disconnect();
-    process.stdout.write("Mongoose disconnected... ");
-  } catch {
+
+    cache.flushAll();
+    cache.close();
+    logger.info("Cache flushed and closed");
+  } catch (err) {
     // Oops, something happened. Just exit
-    process.stdout.write("ERROR! EXITING!");
+    logger.error(`An error occured while closing.\n${err}`);
     process.exit(1);
   }
   // Everything worked cleanly, exit with code 0
-  process.stdout.write("Everything closed successfully. Closing process");
+  logger.warn("Everything closed successfully. Exiting with code 0");
   process.exit(0);
 }
