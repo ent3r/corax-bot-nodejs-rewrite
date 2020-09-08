@@ -5,44 +5,49 @@ import axiosInstance from "./axios";
 
 const cache = new nodeCache({ stdTTL: 60 * 60, checkperiod: 60 });
 
-const fetchCtftimeUpcoming = async (): Promise<any | void> => {
+const fetchCtftimeUpcoming = async (): Promise<any | null> => {
   return await axiosInstance
     .get("https://ctftime.org/api/v1/events/?limit=10")
     .then((response) => {
-      return response.data;
+      return response.data ? response.data : null;
     })
-    .catch((err) =>
-      logger.warn(`Unable to fetch data from CTFTime API.\n${err}`)
-    );
+    .catch((err) => {
+      logger.warn(`Unable to fetch data from CTFTime API. Axios error: \n${err}`);
+      return null;
+    });
 };
 
-const updateCTFTimeCache = async (): Promise<any | void> => {
-  const newCache = await fetchCtftimeUpcoming();
+const updateCTFTimeCache = async (oldCache?: any): Promise<any | void> => {
+  const newCache = (await fetchCtftimeUpcoming()) || oldCache || null;
 
-  if (!newCache) {
-    logger.warn("CTFTime API returned no data");
+  if (!newCache && !oldCache) {
+    logger.warn(
+      "CTFTime API returned no data. Old cache doesn't exist. Setting cache to null"
+    );
+    cache.set("ctfTime", null);
+  } else if (!newCache && oldCache) {
+    logger.warn("CTFTime API returned no data. Setting cache to old value");
+    cache.set("ctfTime", oldCache);
+  } else {
+    cache.set("ctfTime", newCache);
+    logger.info(
+      `Updated cache. Got CTFs:${newCache
+        .map((ctf) => `\n - ${ctf.title}`)
+        .join("")}`
+    );
   }
-
-  cache.set("ctfTime", newCache);
-
-  logger.info(
-    `Updated cache. Got CTFs:${newCache
-      .map((ctf) => `\n - ${ctf.title}`)
-      .join("")}`
-  );
-
-  return newCache;
+  return newCache ? newCache : oldCache;
 };
 
 const initCache = async (): Promise<void> => {
   await updateCTFTimeCache();
   cache.on("expired", async (key, value) => {
-    logger.warn("Cache item expired, updating");
     await cacheExpired(key, value);
   });
 };
 
 const cacheExpired = async (key: string, value: any): Promise<void> => {
+  logger.warn("Cache item expired, updating");
   if (key === "ctfTime") {
     const newCtftimeCache = await updateCTFTimeCache();
     if (!newCtftimeCache) {
