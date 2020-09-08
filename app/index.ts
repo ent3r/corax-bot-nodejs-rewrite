@@ -22,11 +22,16 @@ import { Client } from "discord.js";
 import { loadCommands, setCooldowns, loadHelpPages } from "./util";
 import { message, guildCreate } from "./events/index";
 import disconnect from "./handlers/disconnect";
+import { initCache } from "./handlers/cache";
+
 import guildDelete from "./events/guildDelete";
 logger.debug("Dependencies loaded");
 
 // Setup services and connections. In this case just mongodb
 require("./handlers/mongodb");
+
+// Set up all caching
+initCache();
 
 // Create the client, and disable the option for it to mention @everyone
 const client = new Client({
