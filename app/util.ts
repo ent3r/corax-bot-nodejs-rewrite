@@ -33,15 +33,22 @@ const addCommand = (
 /**
  *Loads commands from `folder` and returns a new collection
  *
- * @param {string} [folder="./commands/"] The folder to be searched
- * @returns {Promise<Collection<string, ICommand>>} A promise for a collection of all the commands found
+ * @param {string} [path="./commands/"] The folder to be searched
+ * @returns {PromisePromise<{commands: Client["commands"], commandGroups: Client["commandGroups"]}>} A promise for a collection of all the commands found
  */
 const loadCommands = async (
-  folder = "./commands/"
+  path = "./commands/"
 ): Promise<{
   commands: Client["commands"];
   commandGroups: Client["commandGroups"];
 }> => {
+  /* So... The naming of stuff here is kinda confusing. I'm not that good at naming shit, so here is an explaination of the different stuff:
+
+  - CommandCollection:  The collection that is eventually returned. It contains all the commands of the bot, mapped in a string:command type thing
+  - CommandGroups:      An array of all the groups. This is used for the help command (For example)
+  - ungroupedCommands:  A group that contains all the ungrouped commands (Very self-explanatory)
+  - files:              All the files in the spesified folder that ends in either ".ts" or ".js"
+  */
   const CommandCollection = new Collection<string, Command>();
   const CommandGroups: Client["commandGroups"] = [];
   const ungroupedCommands = new CommandGroup(
@@ -53,7 +60,7 @@ const loadCommands = async (
   );
 
   // Goes through a folder and finds all .js and .ts files
-  const files = readdirSync(folder).filter(
+  const files = readdirSync(path).filter(
     (file) => file.endsWith(".js") || file.endsWith(".ts")
   );
 
@@ -63,7 +70,7 @@ const loadCommands = async (
   for (const file of files) {
     // Require it, making sure to add in the folder it is in
     const commands: CommandGroup | Command | void = await require(resolve(
-      folder,
+      path,
       file
     ));
 
@@ -166,20 +173,20 @@ const loadHelpPages = (commandGroups: CommandGroup[]): Client["helpPages"] => {
 /**
  *Sets all the cooldowns for a command
  *
- * @param {Client} client The client object
+ * @param {Client} commands The client object
  */
-const setCooldowns = (client: Client): void => {
+const setCooldowns = (commands: Client["commands"]): Client["cooldowns"] => {
   // Make the cooldown collection that will be added to the client later
   const cooldowns = new Collection<string, Collection<string, number>>();
 
   // For every command, add it to the collection. Using it's name as the key
-  client.commands.forEach((command) => {
+  commands.forEach((command) => {
     cooldowns.set(command.config.name, new Collection());
   });
   logger.debug("Added cooldowns for commands");
 
   // Add the cooldown collection to the client
-  client.cooldowns = cooldowns;
+  return cooldowns;
 };
 
 /**
