@@ -19,38 +19,18 @@ if (process.env.NODE_ENV !== "production") {
 
 // Loading discord.js related dependencies
 import { Client } from "discord.js";
-import { loadCommands, setCooldowns, loadHelpPages } from "./util";
 import { message, guildCreate } from "./events/index";
 import disconnect from "./handlers/disconnect";
-import { initCache } from "./handlers/cache";
 
 import guildDelete from "./events/guildDelete";
+import loader from "./loader";
 logger.debug("Dependencies loaded");
-
-// Setup services and connections. In this case just mongodb
-require("./handlers/mongodb");
-
-// Set up all caching
-initCache();
 
 // Create the client, and disable the option for it to mention @everyone
 const client = new Client({
   disableMentions: "everyone",
 });
 logger.debug("Created Client");
-
-// Load all the commands in use by the bot, and add them to a collection managing delays and cooldowns
-loadCommands(resolve(__dirname, "commands"))
-  .then((commands) => {
-    client.commands = commands.commands;
-    client.commandGroups = commands.commandGroups;
-    client.helpPages = loadHelpPages(commands.commandGroups);
-    setCooldowns(client);
-  })
-  .catch((err) => {
-    // If a command doesn't load, throw the error
-    throw err;
-  });
 
 // Makes sure a document with server settings gets created when the bot joins a new server
 client.on("guildCreate", (guild) => {
@@ -80,5 +60,10 @@ process.once("SIGINT", (signal) => {
   disconnect(signal, client);
 });
 
-// Login the bot using process.env
-client.login(process.env.DISCORD_TOKEN);
+// Load all everyting in use by the bot
+loader(client)
+  .then(_ => client.login(process.env.DISCORD_TOKEN))
+  .catch((err) => {
+    throw err;
+    process.exit(1);
+  });
